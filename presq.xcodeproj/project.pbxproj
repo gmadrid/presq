@@ -12,6 +12,8 @@
 		C763CEF91F26EC6900517756 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C763CEF81F26EC6900517756 /* Assets.xcassets */; };
 		C763CEFC1F26EC6A00517756 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C763CEFA1F26EC6A00517756 /* Main.storyboard */; };
 		C763CF071F26EC6A00517756 /* presqTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C763CF061F26EC6A00517756 /* presqTests.swift */; };
+		C763CF121F26EC9900517756 /* Crawler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C763CF111F26EC9900517756 /* Crawler.swift */; };
+		C763CF141F26F2ED00517756 /* ImageCrawler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C763CF131F26F2ED00517756 /* ImageCrawler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +36,8 @@
 		C763CF021F26EC6A00517756 /* presqTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = presqTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C763CF061F26EC6A00517756 /* presqTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = presqTests.swift; sourceTree = "<group>"; };
 		C763CF081F26EC6A00517756 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C763CF111F26EC9900517756 /* Crawler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Crawler.swift; sourceTree = "<group>"; };
+		C763CF131F26F2ED00517756 /* ImageCrawler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCrawler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,8 @@
 				C763CEF81F26EC6900517756 /* Assets.xcassets */,
 				C763CEFA1F26EC6A00517756 /* Main.storyboard */,
 				C763CEFD1F26EC6A00517756 /* Info.plist */,
+				C763CF111F26EC9900517756 /* Crawler.swift */,
+				C763CF131F26F2ED00517756 /* ImageCrawler.swift */,
 			);
 			path = presq;
 			sourceTree = "<group>";
@@ -197,6 +203,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C763CF141F26F2ED00517756 /* ImageCrawler.swift in Sources */,
+				C763CF121F26EC9900517756 /* Crawler.swift in Sources */,
 				C763CEF71F26EC6900517756 /* ViewController.swift in Sources */,
 				C763CEF51F26EC6900517756 /* AppDelegate.swift in Sources */,
 			);
