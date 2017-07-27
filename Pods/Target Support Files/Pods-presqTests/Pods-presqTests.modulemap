@@ -1,0 +1,6 @@
+framework module Pods_presqTests {
+  umbrella header "Pods-presqTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
