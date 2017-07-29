@@ -7,33 +7,34 @@
 //
 
 import Cocoa
+import CoreGraphics
 import RxSwift
 import RxCocoa
 
-class ImageSource : NSObject {
-  var imageName: Observable<String?>
-  let imageSubject = BehaviorSubject<NSImage?>(value: nil)
-  
-  fileprivate let selectedRow = BehaviorSubject<Int>(value: 0)
-  
-  init(filenames: Observable<[String]>) {
-    imageName = Observable.combineLatest(selectedRow, filenames) { row, fns in
-      if row >= fns.count { return nil }
-      return fns[row]
-    }
-    
-    super.init()
-    
-  }
+enum Error : Swift.Error {
+  case GenericError
 }
 
-extension ImageSource : NSTableViewDelegate {
-  func tableViewSelectionDidChange(_ notification: Notification) {
-    let tableView = notification.object as! NSTableView
-    selectedRow.onNext(tableView.selectedRow)
-  }
+extension CGImage {
+  var size: CGSize { return CGSize(width: width, height: height) }
 }
 
+func toGray(image: NSImage) throws -> NSImage {
+  guard let context = CGContext(data: nil, width: Int(image.size.width), height: Int(image.size.height), bitsPerComponent: 8,   bytesPerRow: 0, space: CGColorSpaceCreateDeviceGray(), bitmapInfo: CGImageAlphaInfo.none.rawValue) else {
+    throw Error.GenericError
+  }
+  
+  guard let cgImageIn = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
+    throw Error.GenericError
+  }
+
+  context.draw(cgImageIn, in: CGRect(origin: CGPoint.zero, size: image.size))
+  guard let cgImageOut = context.makeImage() else {
+    throw Error.GenericError
+  }
+  
+  return NSImage(cgImage: cgImageOut, size: cgImageOut.size)
+}
 
 class ViewController: NSViewController {
   let disposeBag = DisposeBag()
@@ -73,7 +74,8 @@ class ViewController: NSViewController {
     imageSource.imageName
       .map { name -> NSImage? in
         guard let name = name else { return nil }
-        return NSImage(contentsOfFile: name)
+        guard let image =  NSImage(contentsOfFile: name) else { return nil }
+        return try? toGray(image: image)
       }
       .bind(to: image2View.rx.image)
       .disposed(by: disposeBag)
