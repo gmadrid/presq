@@ -12,11 +12,13 @@ protocol Crawler {
   func shouldDescend(dirname: String) -> Bool
   func shouldProcess(filename: String) -> Bool
   func process(filename: String) throws
+  func done()
 }
 
 extension Crawler {
   func shouldDescend(dirname: String) -> Bool { return true }
   func shouldProcess(filename: String) -> Bool { return true }
+  func done() {}
 }
 
 func crawl(_ crawler: Crawler, _ path: String) throws {
@@ -39,4 +41,5 @@ func crawl(_ crawler: Crawler, _ path: String) throws {
       }
     }
   }
+  crawler.done()
 }
