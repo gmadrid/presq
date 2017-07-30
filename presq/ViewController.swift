@@ -15,39 +15,6 @@ enum Error : Swift.Error {
   case GenericError
 }
 
-extension CGSize {
-  var rect: CGRect { return CGRect(origin: .zero, size: self) }
-}
-
-extension NSImage {
-  var cgImage: CGImage? {
-    return cgImage(forProposedRect: nil, context: nil, hints: nil)
-  }
-  
-  func toGray() throws -> NSImage {
-    guard let gray = try cgImage?.toGray() else {
-      throw Error.GenericError
-    }
-    return NSImage(cgImage: gray, size: gray.size)
-  }
-}
-
-extension CGImage {
-  var size: CGSize { return CGSize(width: width, height: height) }
-  
-  func toGray() throws -> CGImage {
-    guard let context = CGContext(data: nil, width: Int(size.width), height: Int(size.height), bitsPerComponent: 8,   bytesPerRow: 0, space: CGColorSpaceCreateDeviceGray(), bitmapInfo: CGImageAlphaInfo.none.rawValue) else {
-      throw Error.GenericError
-    }
-
-    context.draw(self, in: size.rect)
-    guard let cgImageOut = context.makeImage() else {
-      throw Error.GenericError
-    }
-    return cgImageOut
-  }
-}
-
 class ViewController: NSViewController {
   let disposeBag = DisposeBag()
 
@@ -75,22 +42,28 @@ class ViewController: NSViewController {
       })
     .disposed(by: disposeBag)
     
-    imageSource.imageName
+    let imageS = imageSource.imageName
       .map { name -> NSImage? in
         guard let name = name else { return nil }
         return NSImage(contentsOfFile: name)
-      }
-      .bind(to: image1View.rx.image)
-      .disposed(by: disposeBag)
-
-    imageSource.imageName
-      .map { name -> NSImage? in
-        guard let name = name else { return nil }
-        guard let image =  NSImage(contentsOfFile: name) else { return nil }
-        return try? image.toGray()
-      }
-      .bind(to: image2View.rx.image)
-      .disposed(by: disposeBag)
+    }
+    
+    let cgImageS = imageS.map { $0?.cgImage }
+    let bwImageS = cgImageS.map { cgImage -> CGImage? in
+      guard let cgImage = cgImage else { return nil }
+      return try? cgImage.toGray()
+    }
+    let smallImageS = bwImageS.map { cgImage -> CGImage? in
+      guard let cgImage = cgImage else { return nil }
+      return try? cgImage.scale(to: CGSize(width: 8, height: 8))
+    }
+    
+    imageS.bind(to: image1View.rx.image).disposed(by: disposeBag)
+    smallImageS
+      .map { cgImage -> NSImage? in
+        guard let cgImage = cgImage else { return nil }
+        return NSImage(cgImage: cgImage, size: cgImage.size) }
+      .bind(to: image2View.rx.image).disposed(by: disposeBag)
   }
 }
 
