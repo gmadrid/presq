@@ -15,25 +15,37 @@ enum Error : Swift.Error {
   case GenericError
 }
 
-extension CGImage {
-  var size: CGSize { return CGSize(width: width, height: height) }
+extension CGSize {
+  var rect: CGRect { return CGRect(origin: .zero, size: self) }
 }
 
-func toGray(image: NSImage) throws -> NSImage {
-  guard let context = CGContext(data: nil, width: Int(image.size.width), height: Int(image.size.height), bitsPerComponent: 8,   bytesPerRow: 0, space: CGColorSpaceCreateDeviceGray(), bitmapInfo: CGImageAlphaInfo.none.rawValue) else {
-    throw Error.GenericError
+extension NSImage {
+  var cgImage: CGImage? {
+    return cgImage(forProposedRect: nil, context: nil, hints: nil)
   }
   
-  guard let cgImageIn = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
-    throw Error.GenericError
+  func toGray() throws -> NSImage {
+    guard let gray = try cgImage?.toGray() else {
+      throw Error.GenericError
+    }
+    return NSImage(cgImage: gray, size: gray.size)
   }
+}
 
-  context.draw(cgImageIn, in: CGRect(origin: CGPoint.zero, size: image.size))
-  guard let cgImageOut = context.makeImage() else {
-    throw Error.GenericError
-  }
+extension CGImage {
+  var size: CGSize { return CGSize(width: width, height: height) }
   
-  return NSImage(cgImage: cgImageOut, size: cgImageOut.size)
+  func toGray() throws -> CGImage {
+    guard let context = CGContext(data: nil, width: Int(size.width), height: Int(size.height), bitsPerComponent: 8,   bytesPerRow: 0, space: CGColorSpaceCreateDeviceGray(), bitmapInfo: CGImageAlphaInfo.none.rawValue) else {
+      throw Error.GenericError
+    }
+
+    context.draw(self, in: size.rect)
+    guard let cgImageOut = context.makeImage() else {
+      throw Error.GenericError
+    }
+    return cgImageOut
+  }
 }
 
 class ViewController: NSViewController {
@@ -75,7 +87,7 @@ class ViewController: NSViewController {
       .map { name -> NSImage? in
         guard let name = name else { return nil }
         guard let image =  NSImage(contentsOfFile: name) else { return nil }
-        return try? toGray(image: image)
+        return try? image.toGray()
       }
       .bind(to: image2View.rx.image)
       .disposed(by: disposeBag)
