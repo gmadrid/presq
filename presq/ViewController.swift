@@ -26,10 +26,20 @@ class ViewController: NSViewController {
   var imageSource: ImageSource!
   var fileListVM: FileListViewModel!
   
+  func createImageService() throws -> ImageService {
+    do {
+      imageService = try ImageService(directory: "/Users/gmadrid/Documents/Projects/presq/testimages")
+      return imageService
+    } catch {}
+    
+    imageService = try ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages/clean")
+    return imageService
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    imageService = try! ImageService(directory: "/Users/gmadrid/Documents/Projects/presq/testimages")
+    imageService = try! createImageService()
     imageSource = ImageSource(filenames: imageService.filenames)
     fileListVM = FileListViewModel(filenamesS: imageService.filenames)
     tableView.dataSource = fileListVM
@@ -62,8 +72,8 @@ class ViewController: NSViewController {
     smallImageS
       .map { cgImage -> NSImage? in
         guard let cgImage = cgImage else { return nil }
-        print(try? cgImage.intensities())
-        return NSImage(cgImage: cgImage, size: cgImage.size) }
+        let newSize = CGSize(width: cgImage.size.width * 40, height: cgImage.size.height * 40)
+        return NSImage(cgImage: cgImage, size: newSize) }
       .bind(to: image2View.rx.image).disposed(by: disposeBag)
   }
 }

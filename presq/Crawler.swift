@@ -23,7 +23,10 @@ extension Crawler {
 
 func crawl(_ crawler: Crawler, _ path: String) throws {
   let manager = FileManager.default
-  let seq = manager.enumerator(atPath: path)!
+  guard let seq = manager.enumerator(atPath: path) else {
+    throw Error.GenericError
+  }
+
   for val in seq {
     let fragment = val as! String
     let fullPath = (path as NSString).appendingPathComponent(fragment) as String
