@@ -71,7 +71,6 @@ class ViewController: NSViewController {
     smallImageS
       .map { cgImage -> NSImage? in
         guard let cgImage = cgImage else { return nil }
-        try cgImage.ahash()
         let newSize = CGSize(width: cgImage.size.width * 40, height: cgImage.size.height * 40)
         return NSImage(cgImage: cgImage, size: newSize) }
       .bind(to: image2View.rx.image).disposed(by: disposeBag)
