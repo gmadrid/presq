@@ -44,8 +44,8 @@ extension CGImage {
     let totalBytes = height * width
     var result = Array(repeating: UInt8(0), count: totalBytes)
     
-    guard let space = colorSpace,
-      let context = CGContext(data: &result, width: width, height: height, bitsPerComponent: 8,
+    let space = CGColorSpaceCreateDeviceGray()
+    guard let context = CGContext(data: &result, width: width, height: height, bitsPerComponent: 8,
                               bytesPerRow: width, space: space, bitmapInfo: bitmapInfo.rawValue) else {
                                 throw Error.GenericError
     }
