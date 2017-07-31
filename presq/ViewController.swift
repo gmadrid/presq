@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  presq
-//
-//  Created by George Madrid on 7/24/17.
-//  Copyright © 2017 George Madrid. All rights reserved.
-//
-
 import Cocoa
 import CoreGraphics
 import RxSwift

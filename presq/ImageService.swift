@@ -29,8 +29,9 @@ class ImageService: Crawler {
     // We only want to process image files.
     let fileExtension = (filename as NSString).pathExtension
 
-    guard let fileUTI = UTTypeCreatePreferredIdentifierForTag(
-      kUTTagClassFilenameExtension, fileExtension as CFString, nil) else {
+    guard let fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,
+                                                              fileExtension as CFString,
+                                                              nil) else {
       return false
     }
     defer {

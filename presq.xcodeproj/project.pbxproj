@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		96E530CCC687B124F890E2FE /* Pods_presq.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBC5CC0F713D816F1E588D9 /* Pods_presq.framework */; };
 		C16D9BA751CABF6492B716E5 /* Pods_presqTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD0C5241FEF94E3B953674B5 /* Pods_presqTests.framework */; };
+		C71962B41F2F7DA6000EE238 /* CGSizeExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71962B31F2F7DA6000EE238 /* CGSizeExt.swift */; };
+		C71962B61F2F7DD7000EE238 /* NSImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71962B51F2F7DD7000EE238 /* NSImageExt.swift */; };
+		C71962B81F2F7E2E000EE238 /* CGImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71962B71F2F7E2E000EE238 /* CGImageExt.swift */; };
 		C750072D1F2CCB4800DAF5D2 /* ImageSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C750072C1F2CCB4800DAF5D2 /* ImageSource.swift */; };
-		C750072F1F2D89AA00DAF5D2 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C750072E1F2D89AA00DAF5D2 /* ImageExtensions.swift */; };
 		C763CEF51F26EC6900517756 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C763CEF41F26EC6900517756 /* AppDelegate.swift */; };
 		C763CEF71F26EC6900517756 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C763CEF61F26EC6900517756 /* ViewController.swift */; };
 		C763CEF91F26EC6900517756 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C763CEF81F26EC6900517756 /* Assets.xcassets */; };
@@ -37,8 +39,10 @@
 		36D0B9F122C6A46DBB122BEB /* Pods-presq.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-presq.release.xcconfig"; path = "Pods/Target Support Files/Pods-presq/Pods-presq.release.xcconfig"; sourceTree = "<group>"; };
 		3FBC5CC0F713D816F1E588D9 /* Pods_presq.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_presq.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B93559089B1B7883759371C0 /* Pods-presqTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-presqTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-presqTests/Pods-presqTests.release.xcconfig"; sourceTree = "<group>"; };
+		C71962B31F2F7DA6000EE238 /* CGSizeExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGSizeExt.swift; sourceTree = "<group>"; };
+		C71962B51F2F7DD7000EE238 /* NSImageExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSImageExt.swift; sourceTree = "<group>"; };
+		C71962B71F2F7E2E000EE238 /* CGImageExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGImageExt.swift; sourceTree = "<group>"; };
 		C750072C1F2CCB4800DAF5D2 /* ImageSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSource.swift; sourceTree = "<group>"; };
-		C750072E1F2D89AA00DAF5D2 /* ImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
 		C763CEF11F26EC6900517756 /* presq.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = presq.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C763CEF41F26EC6900517756 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C763CEF61F26EC6900517756 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +98,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C71962B21F2F7D7F000EE238 /* Ext */ = {
+			isa = PBXGroup;
+			children = (
+				C71962B31F2F7DA6000EE238 /* CGSizeExt.swift */,
+				C71962B51F2F7DD7000EE238 /* NSImageExt.swift */,
+				C71962B71F2F7E2E000EE238 /* CGImageExt.swift */,
+			);
+			name = Ext;
+			sourceTree = "<group>";
+		};
 		C763CEE81F26EC6900517756 = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +131,7 @@
 		C763CEF31F26EC6900517756 /* presq */ = {
 			isa = PBXGroup;
 			children = (
+				C71962B21F2F7D7F000EE238 /* Ext */,
 				C763CEF41F26EC6900517756 /* AppDelegate.swift */,
 				C763CEF61F26EC6900517756 /* ViewController.swift */,
 				C763CEF81F26EC6900517756 /* Assets.xcassets */,
@@ -126,7 +141,6 @@
 				C7E4DA931F2A42E1007B89D9 /* ImageService.swift */,
 				C7E4DA951F2A6BCB007B89D9 /* FileListViewModel.swift */,
 				C750072C1F2CCB4800DAF5D2 /* ImageSource.swift */,
-				C750072E1F2D89AA00DAF5D2 /* ImageExtensions.swift */,
 			);
 			path = presq;
 			sourceTree = "<group>";
@@ -343,12 +357,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C71962B41F2F7DA6000EE238 /* CGSizeExt.swift in Sources */,
 				C763CF121F26EC9900517756 /* Crawler.swift in Sources */,
 				C763CEF71F26EC6900517756 /* ViewController.swift in Sources */,
 				C7E4DA961F2A6BCB007B89D9 /* FileListViewModel.swift in Sources */,
 				C7E4DA941F2A42E1007B89D9 /* ImageService.swift in Sources */,
+				C71962B81F2F7E2E000EE238 /* CGImageExt.swift in Sources */,
 				C750072D1F2CCB4800DAF5D2 /* ImageSource.swift in Sources */,
-				C750072F1F2D89AA00DAF5D2 /* ImageExtensions.swift in Sources */,
+				C71962B61F2F7DD7000EE238 /* NSImageExt.swift in Sources */,
 				C763CEF51F26EC6900517756 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
