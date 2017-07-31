@@ -5,10 +5,7 @@ extension NSImage {
     return cgImage(forProposedRect: nil, context: nil, hints: nil)
   }
 
-  func toGray() throws -> NSImage {
-    guard let gray = try cgImage?.toGray() else {
-      throw Error.GenericError
-    }
-    return NSImage(cgImage: gray, size: gray.size)
+  convenience init(cgImage: CGImage) {
+    self.init(cgImage: cgImage, size: cgImage.size)
   }
 }

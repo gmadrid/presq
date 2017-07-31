@@ -28,6 +28,13 @@ class ViewController: NSViewController {
     return imageService
   }
 
+  override func viewDidDisappear() {
+    super.viewDidDisappear()
+
+    // Close the app when we close the window.
+    NSApplication.shared().terminate(nil)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -64,6 +71,7 @@ class ViewController: NSViewController {
     smallImageS
       .map { cgImage -> NSImage? in
         guard let cgImage = cgImage else { return nil }
+        try cgImage.ahash()
         let newSize = CGSize(width: cgImage.size.width * 40, height: cgImage.size.height * 40)
         return NSImage(cgImage: cgImage, size: newSize) }
       .bind(to: image2View.rx.image).disposed(by: disposeBag)
