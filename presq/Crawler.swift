@@ -16,8 +16,8 @@ protocol Crawler {
 }
 
 extension Crawler {
-  func shouldDescend(dirname: String) -> Bool { return true }
-  func shouldProcess(filename: String) -> Bool { return true }
+  func shouldDescend(dirname _: String) -> Bool { return true }
+  func shouldProcess(filename _: String) -> Bool { return true }
   func done() {}
 }
 
@@ -30,10 +30,10 @@ func crawl(_ crawler: Crawler, _ path: String) throws {
   for val in seq {
     let fragment = val as! String
     let fullPath = (path as NSString).appendingPathComponent(fragment) as String
-    var isDir : ObjCBool = false
+    var isDir: ObjCBool = false
 
     guard manager.fileExists(atPath: fullPath, isDirectory: &isDir) else { continue }
-    
+
     if isDir.boolValue {
       if !crawler.shouldDescend(dirname: fullPath) {
         seq.skipDescendants()

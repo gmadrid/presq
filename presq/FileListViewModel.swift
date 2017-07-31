@@ -9,17 +9,18 @@
 import Foundation
 import RxSwift
 
-class FileListViewModel : NSObject {
+class FileListViewModel: NSObject {
   private var disposeBag = DisposeBag()
-  
+
   fileprivate var filenames: [String] = [] {
     didSet {
       filenamesChangedSubject.onNext(())
     }
   }
+
   var filenamesChanged: Observable<()> { return filenamesChangedSubject.asObservable() }
   private let filenamesChangedSubject = PublishSubject<()>()
-  
+
   init(filenamesS: Observable<[String]>) {
     super.init()
     filenamesS
@@ -34,7 +35,7 @@ extension FileListViewModel: NSTableViewDataSource {
   public func numberOfRows(in _: NSTableView) -> Int {
     return filenames.count
   }
-  
+
   public func tableView(_: NSTableView, objectValueFor _: NSTableColumn?, row: Int) -> Any? {
     return (filenames[row] as NSString).lastPathComponent
   }
