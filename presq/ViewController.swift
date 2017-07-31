@@ -62,6 +62,7 @@ class ViewController: NSViewController {
     smallImageS
       .map { cgImage -> NSImage? in
         guard let cgImage = cgImage else { return nil }
+        print(try? cgImage.intensities())
         return NSImage(cgImage: cgImage, size: cgImage.size) }
       .bind(to: image2View.rx.image).disposed(by: disposeBag)
   }

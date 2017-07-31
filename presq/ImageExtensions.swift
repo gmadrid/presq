@@ -39,6 +39,19 @@ extension CGImage {
     }
     return cgImageOut
   }
+  
+  func intensities() throws -> [UInt8] {
+    let totalBytes = height * width
+    var result = Array(repeating: UInt8(0), count: totalBytes)
+    
+    guard let space = colorSpace,
+      let context = CGContext(data: &result, width: width, height: height, bitsPerComponent: 8,
+                              bytesPerRow: width, space: space, bitmapInfo: bitmapInfo.rawValue) else {
+                                throw Error.GenericError
+    }
+    context.draw(self, in: size.rect)
+    return result
+  }
 }
 
 extension NSImage {
