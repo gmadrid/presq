@@ -63,26 +63,16 @@ extension CGImage {
 
     let avgValue = intensityValues.avg()
 
-    let hashBits = intensityValues.map { UInt64($0) < avgValue ? 0 : 1 }
-    let hash = hashBits.reduce(UInt64(0)) { ($0 << 1) | UInt64($1) }
+    let hashBits = intensityValues.map { UInt8(CGFloat($0) < avgValue ? 0 : 1) }
+    let hash = hashBits.toBitMap()
 
     return hash
-  }
+  }  
 }
 
-protocol UInt64Convertible {
-  func toUInt64() -> UInt64
-}
-
-extension Int: UInt64Convertible {
-  func toUInt64() -> UInt64 {
-    return UInt64(self)
-  }
-}
-
-extension UInt8: UInt64Convertible {
-  func toUInt64() -> UInt64 {
-    return UInt64(self)
+extension Sequence where Iterator.Element == UInt8 {
+  func toBitMap() -> UInt64 {
+    return reduce(0) { ($0 << 1) | UInt64($1) }
   }
 }
 
@@ -91,10 +81,14 @@ extension Sequence where Iterator.Element: UInt64Convertible {
   func sum() -> UInt64 {
     return reduce(0) { $0 + $1.toUInt64() }
   }
-}
 
-extension Collection where Iterator.Element: UInt64Convertible, Self.IndexDistance: UInt64Convertible {
-  func avg() -> UInt64 {
-    return sum() / count.toUInt64()
+  func avg() -> CGFloat {
+    var total: UInt64 = 0
+    var maxIndex = 0
+    for (index, val) in enumerated() {
+      total += val.toUInt64()
+      maxIndex = index
+    }
+    return CGFloat(total) / CGFloat(UInt64(maxIndex))
   }
 }
