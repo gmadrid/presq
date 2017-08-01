@@ -67,7 +67,65 @@ extension CGImage {
     let hash = hashBits.toBitMap()
 
     return hash
-  }  
+  }
+}
+
+func blockyScaledImage(values: [UInt8], width: Int, height: Int, scale: Int) throws -> CGImage {
+  guard width > 0 && height > 0 && scale > 0 else {
+    throw Error.GenericError
+  }
+  guard values.count >= width * height else {
+    throw Error.GenericError
+  }
+
+  let totalBytes = width * height * scale * scale
+  var bytes = [UInt8]()
+  bytes.reserveCapacity(totalBytes)
+
+  var row = [UInt8]()
+  row.reserveCapacity(width * scale)
+
+  var iter = values.makeIterator()
+
+  for _ in 0 ..< height {
+    for _ in 0 ..< width {
+      guard let byte = iter.next() else {
+        throw Error.GenericError
+      }
+
+      for _ in 0 ..< scale { row.append(byte) }
+    }
+
+    for _ in 0 ..< scale { bytes.append(contentsOf: row) }
+    row.removeAll(keepingCapacity: true)
+  }
+
+  let space = CGColorSpaceCreateDeviceGray()
+  guard let context = CGContext(data: &bytes,
+                                width: Int(width * scale),
+                                height: Int(height * scale),
+                                bitsPerComponent: 8,
+                                bytesPerRow: Int(width * scale),
+                                space: space,
+                                bitmapInfo: CGImageAlphaInfo.none.rawValue),
+    let cgImageOut = context.makeImage() else {
+    throw Error.GenericError
+  }
+  return cgImageOut
+}
+
+func imageForBitmap(bitmap: UInt64, width: Int, height: Int, scale: Int) throws -> CGImage {
+  var bytes = [UInt8]()
+  bytes.reserveCapacity(64)
+
+  var bits = bitmap
+  for _ in 0 ..< 64 {
+    let byte: UInt8 = bits & 0x8000_0000_0000_0000 == 0 ? 0x00 : 0xFF
+    bits = bits << 1
+    bytes.append(byte)
+  }
+
+  return try blockyScaledImage(values: bytes, width: width, height: height, scale: scale)
 }
 
 extension Sequence where Iterator.Element == UInt8 {

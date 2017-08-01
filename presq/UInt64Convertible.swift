@@ -15,5 +15,3 @@ extension UInt8: UInt64Convertible {
     return UInt64(self)
   }
 }
-
-

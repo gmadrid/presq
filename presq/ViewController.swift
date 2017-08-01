@@ -71,8 +71,10 @@ class ViewController: NSViewController {
     smallImageS
       .map { cgImage -> NSImage? in
         guard let cgImage = cgImage else { return nil }
-        let newSize = CGSize(width: cgImage.size.width * 40, height: cgImage.size.height * 40)
-        return NSImage(cgImage: cgImage, size: newSize) }
+        let ahash = try! cgImage.ahash()
+        let blocks = try! imageForBitmap(bitmap: ahash, width: 8, height: 8, scale: 40)
+        return NSImage(cgImage: blocks)
+      }
       .bind(to: image2View.rx.image).disposed(by: disposeBag)
   }
 }
