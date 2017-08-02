@@ -1,7 +1,7 @@
 import Cocoa
 import RxSwift
 
-//class ImageSource: NSObject {
+// class ImageSource: NSObject {
 //  var imageName: Observable<String?>
 //  let imageSubject = BehaviorSubject<NSImage?>(value: nil)
 //
@@ -15,11 +15,11 @@ import RxSwift
 //
 //    super.init()
 //  }
-//}
+// }
 //
-//extension ImageSource: NSTableViewDelegate {
+// extension ImageSource: NSTableViewDelegate {
 //  func tableViewSelectionDidChange(_ notification: Notification) {
 //    let tableView = notification.object as! NSTableView
 //    selectedRow.onNext(tableView.selectedRow)
 //  }
-//}
+// }
