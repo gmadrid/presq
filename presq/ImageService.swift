@@ -19,6 +19,9 @@ class ImageService: NSObject {
   private let disposeBag = DisposeBag()
   private let imageInfoC: ConnectableObservable<ImageInfo>
 
+  // The currently selected Image according to selectedRow observable in init.
+  let XXX
+
   // Only access this on main thread
   fileprivate var infos = [ImageInfo]()
 
@@ -30,7 +33,7 @@ class ImageService: NSObject {
    * The crawl will happen on background thread with QoS .background.
    * Events may fire on any thread.
    */
-  init(directory: String) {
+  init(directory: String, selectedRow _: Observable<Int>) {
     let imageFileNameS = Observable.create { (o: AnyObserver<String>) -> Disposable in
       do {
         try crawl(path: directory,

@@ -20,6 +20,7 @@
 		C763CF071F26EC6A00517756 /* presqTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C763CF061F26EC6A00517756 /* presqTests.swift */; };
 		C763CF121F26EC9900517756 /* Crawl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C763CF111F26EC9900517756 /* Crawl.swift */; };
 		C76753A11F32675F00CB45C6 /* ImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753A01F32675F00CB45C6 /* ImageInfo.swift */; };
+		C76753A31F326BF700CB45C6 /* TableDelegateWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753A21F326BF700CB45C6 /* TableDelegateWrapper.swift */; };
 		C768EF9F1F2FBB6C002EE467 /* UInt64Convertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = C768EF9E1F2FBB6C002EE467 /* UInt64Convertible.swift */; };
 		C7D0FBF61F32207600339B7D /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D0FBF51F32207600339B7D /* ImageService.swift */; };
 		C7E4DA961F2A6BCB007B89D9 /* FileListViewModelOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E4DA951F2A6BCB007B89D9 /* FileListViewModelOld.swift */; };
@@ -56,6 +57,7 @@
 		C763CF081F26EC6A00517756 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C763CF111F26EC9900517756 /* Crawl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Crawl.swift; sourceTree = "<group>"; };
 		C76753A01F32675F00CB45C6 /* ImageInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageInfo.swift; sourceTree = "<group>"; };
+		C76753A21F326BF700CB45C6 /* TableDelegateWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDelegateWrapper.swift; sourceTree = "<group>"; };
 		C768EF9E1F2FBB6C002EE467 /* UInt64Convertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UInt64Convertible.swift; sourceTree = "<group>"; };
 		C7D0FBF51F32207600339B7D /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		C7E4DA951F2A6BCB007B89D9 /* FileListViewModelOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileListViewModelOld.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				C71962B51F2F7DD7000EE238 /* NSImageExt.swift */,
 				C71962B71F2F7E2E000EE238 /* CGImageExt.swift */,
 				C768EF9E1F2FBB6C002EE467 /* UInt64Convertible.swift */,
+				C76753A21F326BF700CB45C6 /* TableDelegateWrapper.swift */,
 			);
 			name = Ext;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				C763CEF71F26EC6900517756 /* ViewController.swift in Sources */,
 				C7E4DA961F2A6BCB007B89D9 /* FileListViewModelOld.swift in Sources */,
 				C768EF9F1F2FBB6C002EE467 /* UInt64Convertible.swift in Sources */,
+				C76753A31F326BF700CB45C6 /* TableDelegateWrapper.swift in Sources */,
 				C71962B81F2F7E2E000EE238 /* CGImageExt.swift in Sources */,
 				C750072D1F2CCB4800DAF5D2 /* ImageSourceOld.swift in Sources */,
 				C7D0FBF61F32207600339B7D /* ImageService.swift in Sources */,

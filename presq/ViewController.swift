@@ -15,13 +15,15 @@ class ViewController: NSViewController {
   @IBOutlet weak var image2View: NSImageView!
 
   var imageService: ImageService!
+  var tableDelegate: TableDelegateWrapper!
   //  var imageSource: ImageSource!
   //  var fileListVM: FileListViewModel!
 
-  func createImageService() throws -> ImageService {
-    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages/clean")
-    //    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages")
-    //    let images = ImageService(directory: "/Users/gmadrid/Dropbox/Images/Adult/Images")
+  func createImageService(selectedRowS: Observable<Int>) throws -> ImageService {
+    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages/clean",
+                              //    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages")
+                              //    let images = ImageService(directory: "/Users/gmadrid/Dropbox/Images/Adult/Images")
+                              selectedRow: selectedRowS)
     return images
   }
 
@@ -41,7 +43,9 @@ class ViewController: NSViewController {
     //        m.append(b)
     //        return m})
 
-    imageService = try! createImageService()
+    tableDelegate = TableDelegateWrapper(tableView: tableView)
+
+    imageService = try! createImageService(selectedRowS: tableDelegate.selectedRowS)
     tableView.dataSource = imageService
     imageService.reloadable = tableView
 
