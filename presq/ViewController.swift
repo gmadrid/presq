@@ -43,7 +43,7 @@ class ViewController: NSViewController {
     tableView.dataSource = imageService
     imageService.reloadable = tableView
 
-    let imageS = imageService.selectedImageS
+    let imageS = imageService.selectedInfoS
       .map { info -> NSImage? in
         guard let info = info else { return nil }
         return NSImage(contentsOfFile: info.path)

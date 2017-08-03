@@ -19,9 +19,8 @@ class ImageService: NSObject {
   private let disposeBag = DisposeBag()
   private let imageInfoC: ConnectableObservable<ImageInfo>
 
-  // The currently selected Image according to selectedRow observable in init.
-  var selectedImageS: Observable<ImageInfo?> { return selectedImageSubject.asObservable() }
-  private let selectedImageSubject = BehaviorSubject<ImageInfo?>(value: nil)
+  // The currently selected ImageInfo according to selectedRow observable in init.
+  private(set) var selectedInfoS: Observable<ImageInfo?>!
 
   // Only access this on main thread
   fileprivate var infos = [ImageInfo]()
@@ -55,16 +54,13 @@ class ImageService: NSObject {
 
     super.init()
 
-    selectedRow
-      .subscribe(onNext: { [weak self] row in
-        if row >= 0 && row < self?.infos.count ?? 0 {
-          // TODO: can you replace all of this with a bind?
-          self?.selectedImageSubject.onNext(self?.infos[row])
-        } else {
-          self?.selectedImageSubject.onNext(nil)
-        }
-      })
-      .disposed(by: disposeBag)
+    selectedInfoS = selectedRow
+      .observeOn(MainScheduler.instance)
+      .map { [weak self] row in
+        guard let infos = self?.infos,
+          row >= 0 && row < infos.count else { return nil }
+        return infos[row]
+      }
 
     imageInfoC
       .observeOn(MainScheduler.instance)
