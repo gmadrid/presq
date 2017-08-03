@@ -20,7 +20,8 @@ class ImageService: NSObject {
   private let imageInfoC: ConnectableObservable<ImageInfo>
 
   // The currently selected Image according to selectedRow observable in init.
-  let XXX
+  var selectedImageS: Observable<ImageInfo?> { return selectedImageSubject.asObservable() }
+  private let selectedImageSubject = BehaviorSubject<ImageInfo?>(value: nil)
 
   // Only access this on main thread
   fileprivate var infos = [ImageInfo]()
@@ -33,7 +34,7 @@ class ImageService: NSObject {
    * The crawl will happen on background thread with QoS .background.
    * Events may fire on any thread.
    */
-  init(directory: String, selectedRow _: Observable<Int>) {
+  init(directory: String, selectedRow: Observable<Int>) {
     let imageFileNameS = Observable.create { (o: AnyObserver<String>) -> Disposable in
       do {
         try crawl(path: directory,
@@ -53,6 +54,17 @@ class ImageService: NSObject {
     imageInfoC.connect().disposed(by: disposeBag)
 
     super.init()
+
+    selectedRow
+      .subscribe(onNext: { [weak self] row in
+        if row >= 0 && row < self?.infos.count ?? 0 {
+          // TODO: can you replace all of this with a bind?
+          self?.selectedImageSubject.onNext(self?.infos[row])
+        } else {
+          self?.selectedImageSubject.onNext(nil)
+        }
+      })
+      .disposed(by: disposeBag)
 
     imageInfoC
       .observeOn(MainScheduler.instance)

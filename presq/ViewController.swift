@@ -21,8 +21,8 @@ class ViewController: NSViewController {
 
   func createImageService(selectedRowS: Observable<Int>) throws -> ImageService {
     let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages/clean",
-                              //    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages")
-                              //    let images = ImageService(directory: "/Users/gmadrid/Dropbox/Images/Adult/Images")
+                              //    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages",
+                              //    let images = ImageService(directory: "/Users/gmadrid/Dropbox/Images/Adult/Images",
                               selectedRow: selectedRowS)
     return images
   }
@@ -36,18 +36,20 @@ class ViewController: NSViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    //    let filenameS = (NSApplication.shared().delegate as! AppDelegate).imageNamesS
-    //      .scan([String](), accumulator: { a, b -> [String] in
-    //        // TODO: this has a hidden O(n^2)
-    //        var m = a
-    //        m.append(b)
-    //        return m})
 
     tableDelegate = TableDelegateWrapper(tableView: tableView)
 
     imageService = try! createImageService(selectedRowS: tableDelegate.selectedRowS)
     tableView.dataSource = imageService
     imageService.reloadable = tableView
+
+    let imageS = imageService.selectedImageS
+      .map { info -> NSImage? in
+        guard let info = info else { return nil }
+        return NSImage(contentsOfFile: info.path)
+      }
+
+    imageS.bind(to: image1View.rx.image).disposed(by: disposeBag)
 
     //    imageSource = ImageSource(filenames: imageService.filenames)
     //    fileListVM = FileListViewModel(filenamesS: imageService.filenames)
