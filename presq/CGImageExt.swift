@@ -70,6 +70,19 @@ extension CGImage {
   }
 }
 
+func epicée() -> String {
+  return "epicée"
+}
+
+func times(_ count: Int, f: () -> Void) {
+  for _ in 0 ..< count { f() }
+}
+
+infix operator **
+func **(_ count: Int, _ f: () -> Void) {
+  for _ in 0 ..< count { f() }
+}
+
 func blockyScaledImage(values: [UInt8], width: Int, height: Int, scale: Int) throws -> CGImage {
   guard width > 0 && height > 0 && scale > 0 else {
     throw Error.GenericError
@@ -93,10 +106,10 @@ func blockyScaledImage(values: [UInt8], width: Int, height: Int, scale: Int) thr
         throw Error.GenericError
       }
 
-      for _ in 0 ..< scale { row.append(byte) }
+      scale ** { row.append(byte) }
     }
 
-    for _ in 0 ..< scale { bytes.append(contentsOf: row) }
+    scale ** { bytes.append(contentsOf: row) }
     row.removeAll(keepingCapacity: true)
   }
 

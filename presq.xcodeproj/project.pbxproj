@@ -22,6 +22,7 @@
 		C76753A31F326BF700CB45C6 /* TableDelegateWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753A21F326BF700CB45C6 /* TableDelegateWrapper.swift */; };
 		C768EF9F1F2FBB6C002EE467 /* UInt64Convertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = C768EF9E1F2FBB6C002EE467 /* UInt64Convertible.swift */; };
 		C7C8CDBA1F336F950067D447 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C8CDB91F336F950067D447 /* ImageCache.swift */; };
+		C7C8CDBC1F33B6AA0067D447 /* ImageCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C8CDBB1F33B6AA0067D447 /* ImageCacheTests.swift */; };
 		C7D0FBF61F32207600339B7D /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D0FBF51F32207600339B7D /* ImageService.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		C76753A21F326BF700CB45C6 /* TableDelegateWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDelegateWrapper.swift; sourceTree = "<group>"; };
 		C768EF9E1F2FBB6C002EE467 /* UInt64Convertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UInt64Convertible.swift; sourceTree = "<group>"; };
 		C7C8CDB91F336F950067D447 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		C7C8CDBB1F33B6AA0067D447 /* ImageCacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheTests.swift; sourceTree = "<group>"; };
 		C7D0FBF51F32207600339B7D /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		DD0C5241FEF94E3B953674B5 /* Pods_presqTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_presqTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -154,6 +156,7 @@
 			children = (
 				C763CF061F26EC6A00517756 /* presqTests.swift */,
 				C763CF081F26EC6A00517756 /* Info.plist */,
+				C7C8CDBB1F33B6AA0067D447 /* ImageCacheTests.swift */,
 			);
 			path = presqTests;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7C8CDBC1F33B6AA0067D447 /* ImageCacheTests.swift in Sources */,
 				C763CF071F26EC6A00517756 /* presqTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
