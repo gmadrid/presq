@@ -17,10 +17,18 @@ extension NSTableView: ImageServiceReloadable {}
  */
 class ImageService: NSObject {
   private let disposeBag = DisposeBag()
+
   private let imageInfoC: ConnectableObservable<ImageInfo>
 
   // The currently selected ImageInfo according to selectedRow observable in init.
   private(set) var selectedInfoS: Observable<ImageInfo?>!
+
+  private let imageCache = ImageCache<String, CGImage>(resolve: { key in
+    guard let image = NSImage(contentsOfFile: key),
+      let cgImage = image.cgImage
+    else { throw Error.GenericError }
+    return cgImage
+  })
 
   // Only access this on main thread
   fileprivate var infos = [ImageInfo]()
@@ -69,6 +77,10 @@ class ImageService: NSObject {
         self?.reloadable?.reloadData()
       })
       .disposed(by: disposeBag)
+  }
+
+  func loadImage(filename: String) throws -> CGImage {
+    return try imageCache.find(key: filename)
   }
 }
 

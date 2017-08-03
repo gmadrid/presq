@@ -21,7 +21,7 @@ class ViewController: NSViewController {
 
   func createImageService(selectedRowS: Observable<Int>) throws -> ImageService {
     let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages/clean",
-                              //    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages",
+                              //                                  let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages",
                               //    let images = ImageService(directory: "/Users/gmadrid/Dropbox/Images/Adult/Images",
                               selectedRow: selectedRowS)
     return images
@@ -44,9 +44,12 @@ class ViewController: NSViewController {
     imageService.reloadable = tableView
 
     let imageS = imageService.selectedInfoS
-      .map { info -> NSImage? in
-        guard let info = info else { return nil }
-        return NSImage(contentsOfFile: info.path)
+      .map { [weak self] info -> NSImage? in
+        guard let info = info,
+          let imageService = self?.imageService,
+          let cgImage = try? imageService.loadImage(filename: info.path)
+        else { return nil }
+        return NSImage(cgImage: cgImage)
       }
 
     imageS.bind(to: image1View.rx.image).disposed(by: disposeBag)
