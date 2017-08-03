@@ -8,18 +8,18 @@ enum Error: Swift.Error {
 }
 
 class ViewController: NSViewController {
-  let disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
 
-  @IBOutlet weak var tableView: NSTableView!
-  @IBOutlet weak var image1View: NSImageView!
-  @IBOutlet weak var image2View: NSImageView!
+  @IBOutlet private weak var tableView: NSTableView!
+  @IBOutlet private weak var image1View: NSImageView!
+  @IBOutlet private weak var image2View: NSImageView!
 
-  var imageService: ImageService!
-  var tableDelegate: TableDelegateWrapper!
+  private var imageService: ImageService!
+  private var tableDelegate: TableDelegateWrapper!
   //  var imageSource: ImageSource!
   //  var fileListVM: FileListViewModel!
 
-  func createImageService(selectedRowS: Observable<Int>) throws -> ImageService {
+  private func createImageService(selectedRowS: Observable<Int>) throws -> ImageService {
     let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages/clean",
                               //                                  let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages",
                               //    let images = ImageService(directory: "/Users/gmadrid/Dropbox/Images/Adult/Images",
