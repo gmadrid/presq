@@ -20,9 +20,9 @@ class ViewController: NSViewController {
   //  var fileListVM: FileListViewModel!
 
   private func createImageService(selectedRowS: Observable<Int>) throws -> ImageService {
-    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages/clean",
-                              //                                  let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages",
-                              //    let images = ImageService(directory: "/Users/gmadrid/Dropbox/Images/Adult/Images",
+    //    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages/clean",
+    //                                  let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages",
+    let images = ImageService(directory: "/Users/gmadrid/Dropbox/Images/Adult/Images",
                               selectedRow: selectedRowS)
     return images
   }
