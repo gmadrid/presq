@@ -5,7 +5,9 @@ func simpleResolve(key: String) -> Int {
   return Int(key)!
 }
 
-func iter<K, V>(from: CacheNode<K, V>?, next: (CacheNode<K, V>) -> CacheNode<K, V>? = { $0.next }, doing: (CacheNode<K, V>) -> Bool) -> Bool {
+func iter<K, V>(from: CacheNode<K, V>?,
+                next: (CacheNode<K, V>) -> CacheNode<K, V>? = { $0.next },
+                doing: (CacheNode<K, V>) -> Bool) -> Bool {
   var node_ = from
   while let node = node_ {
     if !doing(node) { return false }
@@ -69,11 +71,9 @@ class ImageCacheTests: XCTestCase {
   }
 
   func checkContains<K, V>(_ cache: ImageCache<K, V>, _ keys: [K]) -> Bool {
-    for key in keys {
-      if cache.values[key] == nil {
-        print("Key, '\(key)', missing from cache")
-        return false
-      }
+    for key in keys where cache.values[key] == nil {
+      print("Key, '\(key)', missing from cache")
+      return false
     }
     return true
   }

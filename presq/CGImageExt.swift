@@ -70,17 +70,10 @@ extension CGImage {
   }
 }
 
-func epicée() -> String {
-  return "epicée"
-}
-
-func times(_ count: Int, f: () -> Void) {
-  for _ in 0 ..< count { f() }
-}
-
-infix operator **
-func **(_ count: Int, _ f: () -> Void) {
-  for _ in 0 ..< count { f() }
+extension Int {
+  func times(_ f: () -> Void) {
+    for _ in 0 ..< self { f() }
+  }
 }
 
 func blockyScaledImage(values: [UInt8], width: Int, height: Int, scale: Int) throws -> CGImage {
@@ -106,10 +99,10 @@ func blockyScaledImage(values: [UInt8], width: Int, height: Int, scale: Int) thr
         throw Error.GenericError
       }
 
-      scale ** { row.append(byte) }
+      scale.times { row.append(byte) }
     }
 
-    scale ** { bytes.append(contentsOf: row) }
+    scale.times { bytes.append(contentsOf: row) }
     row.removeAll(keepingCapacity: true)
   }
 
