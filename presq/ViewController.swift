@@ -54,42 +54,23 @@ class ViewController: NSViewController {
 
     imageS.bind(to: image1View.rx.image).disposed(by: disposeBag)
 
-    //    imageSource = ImageSource(filenames: imageService.filenames)
-    //    fileListVM = FileListViewModel(filenamesS: imageService.filenames)
-    //    tableView.dataSource = fileListVM
-    //    tableView.delegate = imageSource
+    let cgImageS = imageS.map { $0?.cgImage }
+    let bwImageS = cgImageS.map { cgImage -> CGImage? in
+      guard let cgImage = cgImage else { return nil }
+      return try? cgImage.toGray()
+    }
+    let smallImageS = bwImageS.map { cgImage -> CGImage? in
+      guard let cgImage = cgImage else { return nil }
+      return try? cgImage.scale(to: CGSize(width: 8, height: 8))
+    }
 
-    //    fileListVM.filenamesChanged
-    //      .observeOn(MainScheduler.instance)
-    //      .subscribe(onNext: { [weak self] _ in
-    //        self?.tableView.reloadData()
-    //      })
-    //      .disposed(by: disposeBag)
-    //
-    //    let imageS = imageSource.imageName
-    //      .map { name -> NSImage? in
-    //        guard let name = name else { return nil }
-    //        return NSImage(contentsOfFile: name)
-    //      }
-    //
-    //    let cgImageS = imageS.map { $0?.cgImage }
-    //    let bwImageS = cgImageS.map { cgImage -> CGImage? in
-    //      guard let cgImage = cgImage else { return nil }
-    //      return try? cgImage.toGray()
-    //    }
-    //    let smallImageS = bwImageS.map { cgImage -> CGImage? in
-    //      guard let cgImage = cgImage else { return nil }
-    //      return try? cgImage.scale(to: CGSize(width: 8, height: 8))
-    //    }
-    //
-    //    imageS.bind(to: image1View.rx.image).disposed(by: disposeBag)
-    //    smallImageS
-    //      .map { cgImage -> NSImage? in
-    //        guard let cgImage = cgImage else { return nil }
-    //        let ahash = try! cgImage.ahash()
-    //        let blocks = try! imageForBitmap(bitmap: ahash, width: 8, height: 8, scale: 40)
-    //        return NSImage(cgImage: blocks)
-    //      }
-    //      .bind(to: image2View.rx.image).disposed(by: disposeBag)
+    smallImageS
+      .map { cgImage -> NSImage? in
+        guard let cgImage = cgImage else { return nil }
+        let ahash = try! cgImage.ahash()
+        let blocks = try! imageForBitmap(bitmap: ahash, width: 8, height: 8, scale: 40)
+        return NSImage(cgImage: blocks)
+      }
+      .bind(to: image2View.rx.image).disposed(by: disposeBag)
   }
 }
