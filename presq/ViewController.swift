@@ -4,7 +4,7 @@ import RxSwift
 import RxCocoa
 
 enum Error: Swift.Error {
-  case GenericError
+  case genericError
 }
 
 class ViewController: NSViewController {
@@ -16,12 +16,10 @@ class ViewController: NSViewController {
 
   private var imageService: ImageService!
   private var tableDelegate: TableDelegateWrapper!
-  //  var imageSource: ImageSource!
-  //  var fileListVM: FileListViewModel!
 
   private func createImageService(selectedRowS: Observable<Int>) throws -> ImageService {
     //    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages/clean",
-    //                                  let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages",
+    //    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages",
     let images = ImageService(directory: "/Users/gmadrid/Dropbox/Images/Adult/Images",
                               selectedRow: selectedRowS)
     return images
@@ -66,9 +64,10 @@ class ViewController: NSViewController {
 
     smallImageS
       .map { cgImage -> NSImage? in
-        guard let cgImage = cgImage else { return nil }
-        let ahash = try! cgImage.ahash()
-        let blocks = try! imageForBitmap(bitmap: ahash, width: 8, height: 8, scale: 40)
+        guard let cgImage = cgImage,
+          let ahash = try? cgImage.ahash(),
+          let blocks = try? imageForBitmap(bitmap: ahash, width: 8, height: 8, scale: 40)
+        else { return nil }
         return NSImage(cgImage: blocks)
       }
       .bind(to: image2View.rx.image).disposed(by: disposeBag)

@@ -16,11 +16,14 @@ func crawl(path: String,
   let manager = FileManager.default
   // TODO: throw something real and informative here.
   guard let seq = manager.enumerator(atPath: path) else {
-    throw Error.GenericError
+    throw Error.genericError
   }
 
   for val in seq {
-    let fullPath = (path as NSString).appendingPathComponent(val as! String)
+    // TODO: Should you log or error or something here?
+    guard let stringVal = val as? String else { continue; }
+
+    let fullPath = (path as NSString).appendingPathComponent(stringVal)
 
     var isDir: ObjCBool = false
     guard manager.fileExists(atPath: fullPath, isDirectory: &isDir) else { continue }

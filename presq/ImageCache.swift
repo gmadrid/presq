@@ -6,9 +6,9 @@ class CacheNode<K, V> where K: Hashable {
   var prev: CacheNode<K, V>?
   var next: CacheNode<K, V>?
 
-  init(k: K, v: V) {
-    key = k
-    value = v
+  init(key: K, value: V) {
+    self.key = key
+    self.value = value
   }
 }
 
@@ -112,7 +112,7 @@ class ImageCache<K, V> where K: Hashable {
 
       maybeRemoveLRU()
 
-      let newNode = NodeType(k: key, v: val)
+      let newNode = NodeType(key: key, value: val)
       values[key] = newNode
 
       addMru(newNode)

@@ -26,7 +26,7 @@ class ImageService: NSObject {
   private let imageCache = ImageCache<String, CGImage>(maxSize: 100) { key in
     guard let image = NSImage(contentsOfFile: key),
       let cgImage = image.cgImage
-    else { throw Error.GenericError }
+    else { throw Error.genericError }
     return cgImage
   }
 
@@ -42,10 +42,10 @@ class ImageService: NSObject {
    * Events may fire on any thread.
    */
   init(directory: String, selectedRow: Observable<Int>) {
-    let imageFileNameS = Observable.create { (o: AnyObserver<String>) -> Disposable in
+    let imageFileNameS = Observable.create { (obs: AnyObserver<String>) -> Disposable in
       do {
         try crawl(path: directory,
-                  process: { o.onNext($0) },
+                  process: { obs.onNext($0) },
                   shouldDescend: shouldDescend,
                   shouldProcess: shouldProcess)
       } catch {
@@ -72,8 +72,8 @@ class ImageService: NSObject {
 
     imageInfoC
       .observeOn(MainScheduler.instance)
-      .subscribe(onNext: { [weak self] ii in
-        self?.infos.append(ii)
+      .subscribe(onNext: { [weak self] imageInfo in
+        self?.infos.append(imageInfo)
         self?.reloadable?.reloadData()
       })
       .disposed(by: disposeBag)

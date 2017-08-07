@@ -11,12 +11,12 @@ extension CGImage {
                                   bytesPerRow: 0,
                                   space: CGColorSpaceCreateDeviceGray(),
                                   bitmapInfo: CGImageAlphaInfo.none.rawValue) else {
-      throw Error.GenericError
+      throw Error.genericError
     }
 
     context.draw(self, in: size.rect)
     guard let cgImageOut = context.makeImage() else {
-      throw Error.GenericError
+      throw Error.genericError
     }
     return cgImageOut
   }
@@ -29,12 +29,12 @@ extension CGImage {
                                   bytesPerRow: 0,
                                   space: colorSpace!,
                                   bitmapInfo: bitmapInfo.rawValue) else {
-      throw Error.GenericError
+      throw Error.genericError
     }
 
     context.draw(self, in: scaleSize.rect)
     guard let cgImageOut = context.makeImage() else {
-      throw Error.GenericError
+      throw Error.genericError
     }
     return cgImageOut
   }
@@ -51,7 +51,7 @@ extension CGImage {
                                   bytesPerRow: width,
                                   space: space,
                                   bitmapInfo: bitmapInfo.rawValue) else {
-      throw Error.GenericError
+      throw Error.genericError
     }
     context.draw(self, in: size.rect)
     return result
@@ -71,17 +71,17 @@ extension CGImage {
 }
 
 extension Int {
-  func times(_ f: () -> Void) {
-    for _ in 0 ..< self { f() }
+  func times(_ fun: () -> Void) {
+    for _ in 0 ..< self { fun() }
   }
 }
 
 func blockyScaledImage(values: [UInt8], width: Int, height: Int, scale: Int) throws -> CGImage {
   guard width > 0 && height > 0 && scale > 0 else {
-    throw Error.GenericError
+    throw Error.genericError
   }
   guard values.count >= width * height else {
-    throw Error.GenericError
+    throw Error.genericError
   }
 
   let totalBytes = width * height * scale * scale
@@ -96,7 +96,7 @@ func blockyScaledImage(values: [UInt8], width: Int, height: Int, scale: Int) thr
   for _ in 0 ..< height {
     for _ in 0 ..< width {
       guard let byte = iter.next() else {
-        throw Error.GenericError
+        throw Error.genericError
       }
 
       scale.times { row.append(byte) }
@@ -115,7 +115,7 @@ func blockyScaledImage(values: [UInt8], width: Int, height: Int, scale: Int) thr
                                 space: space,
                                 bitmapInfo: CGImageAlphaInfo.none.rawValue),
     let cgImageOut = context.makeImage() else {
-    throw Error.GenericError
+    throw Error.genericError
   }
   return cgImageOut
 }
