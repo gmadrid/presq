@@ -8,6 +8,7 @@ target 'presq' do
   # Pods for pdfsplitter
   pod 'RxSwift', '~> 3.4'
   pod 'RxCocoa', '~> 3.4'
+  pod 'CryptoSwift', '~> 0.6.9'
   
   target 'presqTests' do
     inherit! :search_paths

@@ -18,7 +18,7 @@ class TableDelegateWrapper: NSObject {
 
 extension TableDelegateWrapper: NSTableViewDelegate {
   func tableViewSelectionDidChange(_ notification: Notification) {
-    let tableView = notification.object as! NSTableView
+    guard let tableView = notification.object as? NSTableView else { return }
     selectedRowSubject.onNext(tableView.selectedRow)
   }
 }
