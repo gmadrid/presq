@@ -1,4 +1,5 @@
 import Foundation
+import RxSwift
 
 /**
  * Crawl all subdirectories of path and process all files.
@@ -21,7 +22,7 @@ func crawl(path: String,
 
   for val in seq {
     // TODO: Should you log or error or something here?
-    guard let stringVal = val as? String else { continue; }
+    guard let stringVal = val as? String else { continue }
 
     let fullPath = (path as NSString).appendingPathComponent(stringVal)
 

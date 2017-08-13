@@ -14,16 +14,15 @@ class ViewController: NSViewController {
   @IBOutlet private weak var image1View: NSImageView!
   @IBOutlet private weak var image2View: NSImageView!
 
-  private var imageService: ImageService!
-  private var tableDelegate: TableDelegateWrapper!
-
-  private func createImageService(selectedRowS: Observable<Int>) throws -> ImageService {
-    //    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages/clean",
-    //    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages",
-    let images = ImageService(directory: "/Users/gmadrid/Dropbox/Images/Adult/Images",
-                              selectedRow: selectedRowS)
-    return images
+  private var imageCache = ImageCache<URL, CGImage>(maxSize: 50) { key in
+    guard let image = NSImage(contentsOf: key),
+      let cgImage = image.cgImage
+      else { throw Error.genericError }
+    return cgImage
   }
+
+    private var imageList: ImageList!
+  private var tableDelegate: TableDelegateWrapper!
 
   override func viewDidDisappear() {
     super.viewDidDisappear()
@@ -36,20 +35,25 @@ class ViewController: NSViewController {
     super.viewDidLoad()
 
     tableDelegate = TableDelegateWrapper(tableView: tableView)
-
-    imageService = try! createImageService(selectedRowS: tableDelegate.selectedRowS)
-    tableView.dataSource = imageService
-    imageService.reloadable = tableView
-
-    let imageS = imageService.selectedInfoS
-      .map { [weak self] info -> NSImage? in
-        guard let info = info,
-          let imageService = self?.imageService,
-          let cgImage = try? imageService.loadImage(filename: info.path)
-        else { return nil }
+    //    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages/clean",
+    //    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages",
+    //    let images = ImageService(directory: "/Users/gmadrid/Dropbox/Images/Adult/Images",
+    imageList = ImageList.createImageListForDirectory("/Users/gmadrid/Dropbox/Images/Adult/Images")
+    tableView.dataSource = imageList.dataSource
+    imageList.reloadable = tableView
+    
+    let imageInfoS = tableDelegate.selectedRowS
+      .map { [weak self] rowNum in
+        return self?.imageList[rowNum]
+    }
+    
+    let imageS = imageInfoS
+      .map { [weak self] imageInfo -> NSImage? in
+        guard let this = self,
+          let imageInfo = imageInfo,
+          let cgImage = try? this.imageCache.find(key: imageInfo.url) else { return nil }
         return NSImage(cgImage: cgImage)
-      }
-
+    }
     imageS.bind(to: image1View.rx.image).disposed(by: disposeBag)
 
     let cgImageS = imageS.map { $0?.cgImage }

@@ -1,0 +1,15 @@
+Brief architectural notes.
+
+Image names (IM): some source of URLs for image files. Right now, this is just the result of a
+                  directory crawl, but in principle, it could come from anywhere
+
+InfoList (IL): the info list is the primary driver of the UI. It is a list of ImageInfo, and it
+               is only ever accessed through the main thread. (The ImageInfo objects it contains
+               should also only be accessed on the main thread.)
+
+Pipeline (PIPE): receives image URLs and pushes the images from one "handler" to the next.
+                 Each handler will receive a (URL, CGImage) pair, and returns a Closure which
+                 can manipulate the ImageInfo on the main thread. The pipeline runs primarily on
+                 background threads so that work can be done without janking the UI.
+                 The pipeline assumes that the ImageInfo for the URL is already present in the
+                 InfoList.
