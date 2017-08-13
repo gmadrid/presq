@@ -17,11 +17,11 @@ class ViewController: NSViewController {
   private var imageCache = ImageCache<URL, CGImage>(maxSize: 50) { key in
     guard let image = NSImage(contentsOf: key),
       let cgImage = image.cgImage
-      else { throw Error.genericError }
+    else { throw Error.genericError }
     return cgImage
   }
 
-    private var imageList: ImageList!
+  private var imageList: ImageList!
   private var tableDelegate: TableDelegateWrapper!
 
   override func viewDidDisappear() {
@@ -41,19 +41,19 @@ class ViewController: NSViewController {
     imageList = ImageList.createImageListForDirectory("/Users/gmadrid/Dropbox/Images/Adult/Images")
     tableView.dataSource = imageList.dataSource
     imageList.reloadable = tableView
-    
+
     let imageInfoS = tableDelegate.selectedRowS
       .map { [weak self] rowNum in
         return self?.imageList[rowNum]
-    }
-    
+      }
+
     let imageS = imageInfoS
       .map { [weak self] imageInfo -> NSImage? in
         guard let this = self,
           let imageInfo = imageInfo,
           let cgImage = try? this.imageCache.find(key: imageInfo.url) else { return nil }
         return NSImage(cgImage: cgImage)
-    }
+      }
     imageS.bind(to: image1View.rx.image).disposed(by: disposeBag)
 
     let cgImageS = imageS.map { $0?.cgImage }

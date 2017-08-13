@@ -10,7 +10,7 @@ protocol Reloadable: class {
 
 extension NSTableView: Reloadable {}
 
-private class MutableImageInfo : ImageInfo {
+private class MutableImageInfo: ImageInfo {
   let url: URL
   var filename: String { return url.lastPathComponent }
 
@@ -83,7 +83,7 @@ class ImageList {
       })
       .disposed(by: disposeBag)
   }
-  
+
   subscript(index: Int) -> ImageInfo? {
     return infoList[index]
   }
