@@ -51,17 +51,20 @@ class ViewController: NSViewController {
       .map { [weak self] rowNum in
         return self?.imageList[rowNum]
       }
+    
+    let cgImageS = imageInfoS.map { [weak self] imageInfo -> CGImage? in
+      guard let this = self,
+        let imageInfo = imageInfo,
+        let cgImage = try? this.imageCache.find(key: imageInfo.url) else { return nil }
+      return cgImage
+    }
 
-    let imageS = imageInfoS
-      .map { [weak self] imageInfo -> NSImage? in
-        guard let this = self,
-          let imageInfo = imageInfo,
-          let cgImage = try? this.imageCache.find(key: imageInfo.url) else { return nil }
-        return NSImage(cgImage: cgImage)
-      }
+    let imageS = cgImageS.map { cgImage -> NSImage? in
+      guard let cgImage = cgImage else { return nil }
+      return NSImage(cgImage: cgImage)
+    }
     imageS.bind(to: image1View.rx.image).disposed(by: disposeBag)
 
-    let cgImageS = imageS.map { $0?.cgImage }
     let bwImageS = cgImageS.map { cgImage -> CGImage? in
       guard let cgImage = cgImage else { return nil }
       return try? cgImage.toGray()
