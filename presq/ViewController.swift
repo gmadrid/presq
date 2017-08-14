@@ -34,11 +34,16 @@ class ViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    // Set up the table delegate to propagate state changes from the table view.
     tableDelegate = TableDelegateWrapper(tableView: tableView)
-    //    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages/clean",
-    //    let images = ImageService(directory: "/Users/gmadrid/Desktop/presq/testimages",
-    //    let images = ImageService(directory: "/Users/gmadrid/Dropbox/Images/Adult/Images",
-    imageList = ImageList.createImageListForDirectory("/Users/gmadrid/Dropbox/Images/Adult/Images")
+
+    // Start up the image crawl.
+//    let dir = "/Users/gmadrid/Desktop/presq/testimages/clean"
+//    let dir = "/Users/gmadrid/Desktop/presq/testimages"
+    let dir = "/Users/gmadrid/Dropbox/Images/Adult/Images"
+    imageList = ImageList.createImageListForDirectory(dir)
+    
+    // Link the table to the image list and vice versa.
     tableView.dataSource = imageList.dataSource
     imageList.reloadable = tableView
 
