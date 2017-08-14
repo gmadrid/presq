@@ -38,3 +38,39 @@ func crawl(path: String,
     }
   }
 }
+
+func imageFileSource(from directory: String) -> Observable<URL> {
+  func shouldDescend(_ path: String) -> Bool {
+    // Skip any "hidden" directories (determined by looking for a '.' prefix.
+    let lastComponent = (path as NSString).lastPathComponent
+    return !lastComponent.hasPrefix(".")
+  }
+
+  func shouldProcess(_ path: String) -> Bool {
+    // We only want to process image files.
+    let fileExtension = (path as NSString).pathExtension
+
+    guard let fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,
+                                                              fileExtension as CFString,
+                                                              nil) else {
+      return false
+    }
+    defer { fileUTI.release() }
+
+    return UTTypeConformsTo(fileUTI.takeUnretainedValue(), kUTTypeImage)
+  }
+
+  return Observable.create { (obs: AnyObserver<URL>) -> Disposable in
+    do {
+      try crawl(path: directory,
+                process: { path in
+                  obs.onNext(URL(fileURLWithPath: path)) },
+                shouldDescend: shouldDescend,
+                shouldProcess: shouldProcess)
+    } catch {
+      // TODO: consider returning an error here.
+      print("CAUGHT")
+    }
+    return Disposables.create()
+  }
+}

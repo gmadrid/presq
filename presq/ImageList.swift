@@ -58,20 +58,8 @@ class ImageList {
   private(set) var dataSource: NSTableViewDataSource = ImageListDataSource()
 
   class func createImageListForDirectory(_ directory: String) -> ImageList {
-    return ImageList(imageURLS: Observable.create { (obs: AnyObserver<URL>) -> Disposable in
-      do {
-        try crawl(path: directory,
-                  process: { path in
-                    obs.onNext(URL(fileURLWithPath: path)) },
-                  shouldDescend: shouldDescend,
-                  shouldProcess: shouldProcess)
-      } catch {
-        // TODO: consider returning an error here.
-        print("CAUGHT")
-      }
-      return Disposables.create()
-    }
-    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)))
+    return ImageList(imageURLS: imageFileSource(from: directory)
+      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)))
   }
 
   init(imageURLS: Observable<URL>) {
@@ -91,24 +79,4 @@ class ImageList {
   subscript(index: Int) -> ImageInfo? {
     return infoList[index]
   }
-}
-
-private func shouldDescend(_ path: String) -> Bool {
-  // Skip any "hidden" directories (determined by looking for a '.' prefix.
-  let lastComponent = (path as NSString).lastPathComponent
-  return !lastComponent.hasPrefix(".")
-}
-
-private func shouldProcess(_ path: String) -> Bool {
-  // We only want to process image files.
-  let fileExtension = (path as NSString).pathExtension
-
-  guard let fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,
-                                                            fileExtension as CFString,
-                                                            nil) else {
-    return false
-  }
-  defer { fileUTI.release() }
-
-  return UTTypeConformsTo(fileUTI.takeUnretainedValue(), kUTTypeImage)
 }
