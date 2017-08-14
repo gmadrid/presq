@@ -38,11 +38,11 @@ class ViewController: NSViewController {
     tableDelegate = TableDelegateWrapper(tableView: tableView)
 
     // Start up the image crawl.
-//    let dir = "/Users/gmadrid/Desktop/presq/testimages/clean"
-//    let dir = "/Users/gmadrid/Desktop/presq/testimages"
-    let dir = "/Users/gmadrid/Dropbox/Images/Adult/Images"
+    let dir = "/Users/gmadrid/Desktop/presq/testimages/clean"
+    //    let dir = "/Users/gmadrid/Desktop/presq/testimages"
+    //    let dir = "/Users/gmadrid/Dropbox/Images/Adult/Images"
     imageList = ImageList.createImageListForDirectory(dir)
-    
+
     // Link the table to the image list and vice versa.
     tableView.dataSource = imageList.dataSource
     imageList.reloadable = tableView
@@ -51,7 +51,7 @@ class ViewController: NSViewController {
       .map { [weak self] rowNum in
         return self?.imageList[rowNum]
       }
-    
+
     let cgImageS = imageInfoS.map { [weak self] imageInfo -> CGImage? in
       guard let this = self,
         let imageInfo = imageInfo,

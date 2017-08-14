@@ -50,8 +50,12 @@ class ImageList {
   private let disposeBag = DisposeBag()
 
   fileprivate var infoList = [MutableImageInfo]()
+
+  /** An object implementing the Reloadable protocol to be invoked when the list changes. */
   var reloadable: Reloadable?
-  var dataSource: NSTableViewDataSource = ImageListDataSource()
+
+  /** An ObjC object that can act as a data source for an NSTableView. */
+  private(set) var dataSource: NSTableViewDataSource = ImageListDataSource()
 
   class func createImageListForDirectory(_ directory: String) -> ImageList {
     return ImageList(imageURLS: Observable.create { (obs: AnyObserver<URL>) -> Disposable in
