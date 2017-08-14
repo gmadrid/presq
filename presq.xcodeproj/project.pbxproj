@@ -59,6 +59,7 @@
 		C76753A01F32675F00CB45C6 /* ImageInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageInfo.swift; sourceTree = "<group>"; };
 		C76753A21F326BF700CB45C6 /* TableDelegateWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDelegateWrapper.swift; sourceTree = "<group>"; };
 		C768EF9E1F2FBB6C002EE467 /* UInt64Convertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UInt64Convertible.swift; sourceTree = "<group>"; };
+		C7AF090C1F423FE300A9C926 /* presq-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "presq-Bridging-Header.h"; sourceTree = "<group>"; };
 		C7C8CDB91F336F950067D447 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		C7C8CDBB1F33B6AA0067D447 /* ImageCacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheTests.swift; sourceTree = "<group>"; };
 		DD0C5241FEF94E3B953674B5 /* Pods_presqTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_presqTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,6 +149,7 @@
 				C763CEFA1F26EC6A00517756 /* Main.storyboard */,
 				C763CEFD1F26EC6A00517756 /* Info.plist */,
 				C763CF111F26EC9900517756 /* Crawl.swift */,
+				C7AF090C1F423FE300A9C926 /* presq-Bridging-Header.h */,
 			);
 			path = presq;
 			sourceTree = "<group>";
@@ -228,6 +230,7 @@
 					C763CEF01F26EC6900517756 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = ZG5JDA6E6A;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 					C763CF011F26EC6A00517756 = {
@@ -527,12 +530,15 @@
 			baseConfigurationReference = 163C87607EE16EB72905A08F /* Pods-presq.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = ZG5JDA6E6A;
 				INFOPLIST_FILE = presq/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.scrawlsoft.presq;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "presq/presq-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -542,12 +548,14 @@
 			baseConfigurationReference = 36D0B9F122C6A46DBB122BEB /* Pods-presq.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = ZG5JDA6E6A;
 				INFOPLIST_FILE = presq/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.scrawlsoft.presq;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "presq/presq-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
