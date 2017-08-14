@@ -57,19 +57,22 @@ class ImageList {
   /** An ObjC object that can act as a data source for an NSTableView. */
   private(set) var dataSource: NSTableViewDataSource = ImageListDataSource()
 
-  class func createImageListForDirectory(_ directory: String) -> ImageList {
-    return ImageList(imageURLS: imageFileSource(from: directory)
-      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)))
-  }
+  private let infosCreatedSubject = PublishSubject<URL>()
+  var infosCreatedS: Observable<URL> { return infosCreatedSubject.asObservable() }
 
   init(imageURLS: Observable<URL>) {
     let ilds = ImageListDataSource()
     dataSource = ilds
     ilds.imageList = self
 
-    imageURLS.observeOn(MainScheduler.instance)
+    imageURLS
+      .observeOn(MainScheduler.instance)
       .subscribe(onNext: { [weak self] url in
         self?.infoList.append(MutableImageInfo(url: url))
+
+        // Add to the infosCreated sequence _after_ it has been added to the list.
+        self?.infosCreatedSubject.onNext(url)
+
         self?.reloadable?.reloadData()
         return
       })

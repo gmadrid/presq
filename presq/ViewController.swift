@@ -37,22 +37,45 @@ class ViewController: NSViewController {
     // Set up the table delegate to propagate state changes from the table view.
     tableDelegate = TableDelegateWrapper(tableView: tableView)
 
-    // Start up the image crawl.
+    // Prepare the image crawl on background thread, but it's hot, so defer subs until all set up.
     let dir = "/Users/gmadrid/Desktop/presq/testimages/clean"
     //    let dir = "/Users/gmadrid/Desktop/presq/testimages"
     //    let dir = "/Users/gmadrid/Dropbox/Images/Adult/Images"
-    imageList = ImageList.createImageListForDirectory(dir)
+    let imageNames = imageFileSource(from: dir)
+      .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+      .publish()
 
     // Link the table to the image list and vice versa.
+    imageList = ImageList(imageURLS: imageNames)
     tableView.dataSource = imageList.dataSource
     imageList.reloadable = tableView
 
-    let imageInfoS = tableDelegate.selectedRowS
+    imageList.infosCreatedS
+      .debug()
+      .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+      .subscribe(onNext: { [weak self] imageURL in
+        print("HI THERE")
+        guard let this = self else { print("FOO"); return }
+        guard let cgImage = try? this.imageCache.find(key: imageURL) else { print("BAR"); return }
+        guard let cfData = cgImage.dataProvider?.data else {
+          print("QUUX")
+          return }
+
+        print("BAMMBM")
+//        let hash = (cfData as NSData as Data).md5()
+        print("GEORGE")
+//        print(hash.toHexString())
+      })
+      .disposed(by: disposeBag)
+
+    imageNames.connect().disposed(by: disposeBag)
+
+    let currentImageInfoS = tableDelegate.selectedRowS
       .map { [weak self] rowNum in
         return self?.imageList[rowNum]
       }
 
-    let cgImageS = imageInfoS.map { [weak self] imageInfo -> CGImage? in
+    let cgImageS = currentImageInfoS.map { [weak self] imageInfo -> CGImage? in
       guard let this = self,
         let imageInfo = imageInfo,
         let cgImage = try? this.imageCache.find(key: imageInfo.url) else { return nil }
