@@ -1,6 +1,6 @@
 import Foundation
 
-protocol ImageInfo {
+protocol ImageInfo: class {
   var url: URL { get }
   var filename: String { get }
 

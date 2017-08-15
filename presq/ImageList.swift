@@ -80,6 +80,9 @@ class ImageList {
   private let infosCreatedSubject = PublishSubject<ImageInfo>()
   var infosCreatedS: Observable<ImageInfo> { return infosCreatedSubject.asObservable() }
 
+  private let infosModifiedSubject = PublishSubject<ImageInfo>()
+  var infosModifiedS: Observable<ImageInfo> { return infosModifiedSubject.asObservable() }
+
   init(imageURLS: Observable<URL>) {
     let ilds = ImageListDataSource()
     dataSource = ilds
@@ -108,8 +111,9 @@ class ImageList {
     guard let mutable = imageInfo as? MutableImageInfo else {
       throw Error.genericError
     }
-    DispatchQueue.main.async {
+    DispatchQueue.main.async { [weak self] in
       mutable.mutate(mutation: mutation)
+      self?.infosModifiedSubject.onNext(imageInfo)
     }
   }
 }

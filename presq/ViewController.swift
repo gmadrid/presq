@@ -97,5 +97,12 @@ class ViewController: NSViewController {
     currentImageInfoS
       .map { hashToImage(hash: $0?.dhash) }
       .bind(to: image3View.rx.image).disposed(by: disposeBag)
+
+    Observable.combineLatest(currentImageInfoS, imageList.infosModifiedS)
+      .filter { (current, modified) -> Bool in
+        guard let current = current else { return false }
+        return current === modified
+      }
+      .subscribe(onNext: { print($0) }).disposed(by: disposeBag)
   }
 }
