@@ -10,15 +10,6 @@ protocol Reloadable: class {
 
 extension NSTableView: Reloadable {}
 
-private class MutableImageInfo: ImageInfo {
-  let url: URL
-  var filename: String { return url.lastPathComponent }
-
-  init(url: URL) {
-    self.url = url
-  }
-}
-
 // This little class is just here so that I can provide an NSTableViewDataSource without
 // making the ImageList into an NSObject.
 private class ImageListDataSource: NSObject {
@@ -57,8 +48,8 @@ class ImageList {
   /** An ObjC object that can act as a data source for an NSTableView. */
   private(set) var dataSource: NSTableViewDataSource = ImageListDataSource()
 
-  private let infosCreatedSubject = PublishSubject<URL>()
-  var infosCreatedS: Observable<URL> { return infosCreatedSubject.asObservable() }
+  private let infosCreatedSubject = PublishSubject<ImageInfo>()
+  var infosCreatedS: Observable<ImageInfo> { return infosCreatedSubject.asObservable() }
 
   init(imageURLS: Observable<URL>) {
     let ilds = ImageListDataSource()
@@ -68,10 +59,11 @@ class ImageList {
     imageURLS
       .observeOn(MainScheduler.instance)
       .subscribe(onNext: { [weak self] url in
-        self?.infoList.append(MutableImageInfo(url: url))
+        let imageInfo = MutableImageInfo(url: url)
+        self?.infoList.append(imageInfo)
 
         // Add to the infosCreated sequence _after_ it has been added to the list.
-        self?.infosCreatedSubject.onNext(url)
+        self?.infosCreatedSubject.onNext(imageInfo)
 
         self?.reloadable?.reloadData()
         return
@@ -81,5 +73,12 @@ class ImageList {
 
   subscript(index: Int) -> ImageInfo? {
     return infoList[index]
+  }
+
+  func mutate(imageInfo: ImageInfo, mutation: ImageInfoMutation) throws {
+    guard let mutable = imageInfo as? MutableImageInfo else {
+      throw Error.genericError
+    }
+    mutable.mutate(mutation: mutation)
   }
 }

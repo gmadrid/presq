@@ -14,6 +14,9 @@
 		C71962B41F2F7DA6000EE238 /* CGSizeExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71962B31F2F7DA6000EE238 /* CGSizeExt.swift */; };
 		C71962B61F2F7DD7000EE238 /* NSImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71962B51F2F7DD7000EE238 /* NSImageExt.swift */; };
 		C71962B81F2F7E2E000EE238 /* CGImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71962B71F2F7E2E000EE238 /* CGImageExt.swift */; };
+		C7506D941F428AC6006CFB2D /* DataExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7506D931F428AC6006CFB2D /* DataExt.swift */; };
+		C7506D961F428C1E006CFB2D /* DataExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7506D951F428C1E006CFB2D /* DataExtTests.swift */; };
+		C7506D981F429532006CFB2D /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7506D971F429532006CFB2D /* ImageProcessor.swift */; };
 		C763CEF51F26EC6900517756 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C763CEF41F26EC6900517756 /* AppDelegate.swift */; };
 		C763CEF71F26EC6900517756 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C763CEF61F26EC6900517756 /* ViewController.swift */; };
 		C763CEF91F26EC6900517756 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C763CEF81F26EC6900517756 /* Assets.xcassets */; };
@@ -47,6 +50,9 @@
 		C71962B31F2F7DA6000EE238 /* CGSizeExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGSizeExt.swift; sourceTree = "<group>"; };
 		C71962B51F2F7DD7000EE238 /* NSImageExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSImageExt.swift; sourceTree = "<group>"; };
 		C71962B71F2F7E2E000EE238 /* CGImageExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGImageExt.swift; sourceTree = "<group>"; };
+		C7506D931F428AC6006CFB2D /* DataExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExt.swift; sourceTree = "<group>"; };
+		C7506D951F428C1E006CFB2D /* DataExtTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExtTests.swift; sourceTree = "<group>"; };
+		C7506D971F429532006CFB2D /* ImageProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		C763CEF11F26EC6900517756 /* presq.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = presq.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C763CEF41F26EC6900517756 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C763CEF61F26EC6900517756 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +119,7 @@
 				C71962B71F2F7E2E000EE238 /* CGImageExt.swift */,
 				C768EF9E1F2FBB6C002EE467 /* UInt64Convertible.swift */,
 				C76753A21F326BF700CB45C6 /* TableDelegateWrapper.swift */,
+				C7506D931F428AC6006CFB2D /* DataExt.swift */,
 			);
 			name = Ext;
 			sourceTree = "<group>";
@@ -159,6 +166,7 @@
 			children = (
 				C763CF081F26EC6A00517756 /* Info.plist */,
 				C7C8CDBB1F33B6AA0067D447 /* ImageCacheTests.swift */,
+				C7506D951F428C1E006CFB2D /* DataExtTests.swift */,
 			);
 			path = presqTests;
 			sourceTree = "<group>";
@@ -169,6 +177,7 @@
 				C7092C841F3FA9A6005FF1E9 /* ImageList.swift */,
 				C76753A01F32675F00CB45C6 /* ImageInfo.swift */,
 				C7C8CDB91F336F950067D447 /* ImageCache.swift */,
+				C7506D971F429532006CFB2D /* ImageProcessor.swift */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -393,9 +402,11 @@
 				C7C8CDBA1F336F950067D447 /* ImageCache.swift in Sources */,
 				C763CF121F26EC9900517756 /* Crawl.swift in Sources */,
 				C763CEF71F26EC6900517756 /* ViewController.swift in Sources */,
+				C7506D981F429532006CFB2D /* ImageProcessor.swift in Sources */,
 				C768EF9F1F2FBB6C002EE467 /* UInt64Convertible.swift in Sources */,
 				C76753A31F326BF700CB45C6 /* TableDelegateWrapper.swift in Sources */,
 				C71962B81F2F7E2E000EE238 /* CGImageExt.swift in Sources */,
+				C7506D941F428AC6006CFB2D /* DataExt.swift in Sources */,
 				C76753A11F32675F00CB45C6 /* ImageInfo.swift in Sources */,
 				C7092C851F3FA9A6005FF1E9 /* ImageList.swift in Sources */,
 				C71962B61F2F7DD7000EE238 /* NSImageExt.swift in Sources */,
@@ -408,6 +419,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7C8CDBC1F33B6AA0067D447 /* ImageCacheTests.swift in Sources */,
+				C7506D961F428C1E006CFB2D /* DataExtTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

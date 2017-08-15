@@ -38,9 +38,9 @@ class ViewController: NSViewController {
     tableDelegate = TableDelegateWrapper(tableView: tableView)
 
     // Prepare the image crawl on background thread, but it's hot, so defer subs until all set up.
-    let dir = "/Users/gmadrid/Desktop/presq/testimages/clean"
+    // let dir = "/Users/gmadrid/Desktop/presq/testimages/clean"
     //    let dir = "/Users/gmadrid/Desktop/presq/testimages"
-    //    let dir = "/Users/gmadrid/Dropbox/Images/Adult/Images"
+    let dir = "/Users/gmadrid/Dropbox/Images/Adult/Images"
     let imageNames = imageFileSource(from: dir)
       .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
       .publish()
@@ -50,32 +50,14 @@ class ViewController: NSViewController {
     tableView.dataSource = imageList.dataSource
     imageList.reloadable = tableView
 
+    let engine = ImageProcessorEngine(imageList: imageList)
+
     imageList.infosCreatedS
-      .debug()
       .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-      .subscribe(onNext: { [weak self] imageURL in
-        guard let this = self else { print("FOO"); return }
-        guard let cgImage = try? this.imageCache.find(key: imageURL) else { print("BAR"); return }
-        guard let cfData = cgImage.dataProvider?.data else { print("SHOOP"); return }
-        let data = cfData as NSData as Data
-        
-        var digest = Array<UInt8>(repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
-        let _ = data.withUnsafeBytes { dataPtr in
-          CC_MD5(dataPtr, CC_LONG(data.count), &digest)
-        }
-        print("DIGEST: \(digest)")
-        
-//        let context = UnsafeMutablePointer<CC_MD5_CTX>.allocate(capacity: 1)
-//        CC_MD5(<#T##data: UnsafeRawPointer!##UnsafeRawPointer!#>, <#T##len: CC_LONG##CC_LONG#>, <#T##md: UnsafeMutablePointer<UInt8>!##UnsafeMutablePointer<UInt8>!#>)
-//        CC_MD5_Init(context)
-//        CC_MD5_Update(context, cfData, CC_LONG(cfData.count))
-//        CC_MD5_Final(&digest, context)
-//        context.deallocate(capacity: 1)
-//
-        print("BAMMBM")
-//        let hash = (cfData as NSData as Data).md5()
-        print("GEORGE")
-//        print(hash.toHexString())
+      .subscribe(onNext: { [weak self] imageInfo in
+        guard let this = self,
+          let cgImage = try? this.imageCache.find(key: imageInfo.url) else { return }
+        engine.doit(imageInfo: imageInfo, cgImage: cgImage)
       })
       .disposed(by: disposeBag)
 
