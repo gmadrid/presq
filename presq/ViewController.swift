@@ -100,5 +100,15 @@ class ViewController: NSViewController {
         return NSImage(cgImage: blocks)
       }
       .bind(to: image2View.rx.image).disposed(by: disposeBag)
+
+    smallImageS
+      .map { cgImage -> NSImage? in
+        guard let cgImage = cgImage,
+          let dhash = try? cgImage.dhash(),
+          let blocks = try? imageForBitmap(bitmap: dhash, width: 8, height: 8, scale: 40)
+        else { return nil }
+        return NSImage(cgImage: blocks)
+      }
+      .bind(to: image3View.rx.image).disposed(by: disposeBag)
   }
 }
