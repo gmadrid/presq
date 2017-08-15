@@ -68,6 +68,27 @@ extension CGImage {
 
     return hash
   }
+
+  func dhash() throws -> UInt64 {
+    let smallWidth = 9
+    let smallHeight = 8
+    let smallImage = try toGray().scale(to: CGSize(width: smallWidth, height: smallHeight))
+
+    let intensityValues = try smallImage.intensities()
+
+    var dhash = UInt64(0)
+    for row in 0 ..< smallHeight {
+      for col in 0 ..< smallWidth - 1 {
+        let lt = intensityValues[row * smallWidth + col] <
+          intensityValues[row * smallWidth + col + 1]
+        let bit = lt ? 0 : 1
+
+        dhash = (dhash << 1) + UInt64(bit)
+      }
+    }
+
+    return dhash
+  }
 }
 
 func blockyScaledImage(values: [UInt8], width: Int, height: Int, scale: Int) throws -> CGImage {

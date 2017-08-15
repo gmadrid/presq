@@ -41,6 +41,22 @@ class AhashProcessor: ImageProcessor {
   }
 }
 
+class DhashProcessor: ImageProcessor {
+  let url: URL
+  var dhash: UInt64?
+
+  required init(url: URL) { self.url = url }
+
+  func process(cgImage: CGImage) {
+    dhash = try? cgImage.dhash()
+  }
+
+  func mutate() -> ImageInfoMutation? {
+    guard let dhash = dhash else { return nil }
+    return .dhash(dhash)
+  }
+}
+
 class ImageProcessorEngine {
   let imageList: ImageList
 
@@ -51,6 +67,7 @@ class ImageProcessorEngine {
   var processors: [ImageProcessor.Type] = [
     Sha256Processor.self,
     AhashProcessor.self,
+    DhashProcessor.self,
   ]
 
   func doit(imageInfo: ImageInfo, cgImage: CGImage) {

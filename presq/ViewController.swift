@@ -13,6 +13,7 @@ class ViewController: NSViewController {
   @IBOutlet private weak var tableView: NSTableView!
   @IBOutlet private weak var image1View: NSImageView!
   @IBOutlet private weak var image2View: NSImageView!
+  @IBOutlet private weak var image3View: NSImageView!
 
   private var imageCache = ImageCache<URL, CGImage>(maxSize: 50) { key in
     guard let image = NSImage(contentsOf: key),
