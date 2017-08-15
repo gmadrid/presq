@@ -55,7 +55,6 @@ class ViewController: NSViewController {
     imageList.infosCreatedS
       .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
       .subscribe(onNext: { [weak self] imageInfo in
-        print("THREAD: \(Thread.current)")
         guard let this = self,
           let cgImage = try? this.imageCache.find(key: imageInfo.url) else { return }
         engine.doit(imageInfo: imageInfo, cgImage: cgImage)

@@ -42,8 +42,6 @@ class AhashProcessor: ImageProcessor {
 }
 
 class ImageProcessorEngine {
-  var count = UInt(0)
-
   let imageList: ImageList
 
   init(imageList: ImageList) {
@@ -56,8 +54,6 @@ class ImageProcessorEngine {
   ]
 
   func doit(imageInfo: ImageInfo, cgImage: CGImage) {
-    print("COUNT: \(count)")
-    count += 1
     for p in processors {
       let pp = p.init(url: imageInfo.url)
       pp.process(cgImage: cgImage)
