@@ -70,12 +70,6 @@ extension CGImage {
   }
 }
 
-extension Int {
-  func times(_ fun: () -> Void) {
-    for _ in 0 ..< self { fun() }
-  }
-}
-
 func blockyScaledImage(values: [UInt8], width: Int, height: Int, scale: Int) throws -> CGImage {
   guard width > 0 && height > 0 && scale > 0 else {
     throw Error.genericError
@@ -132,27 +126,4 @@ func imageForBitmap(bitmap: UInt64, width: Int, height: Int, scale: Int) throws 
   }
 
   return try blockyScaledImage(values: bytes, width: width, height: height, scale: scale)
-}
-
-extension Sequence where Iterator.Element == UInt8 {
-  func toBitMap() -> UInt64 {
-    return reduce(0) { ($0 << 1) | UInt64($1) }
-  }
-}
-
-extension Sequence where Iterator.Element: UInt64Convertible {
-  // Compute sum in UInt64 to avoid overflow.
-  func sum() -> UInt64 {
-    return reduce(0) { $0 + $1.toUInt64() }
-  }
-
-  func avg() -> CGFloat {
-    var total: UInt64 = 0
-    var maxIndex = 0
-    for (index, val) in enumerated() {
-      total += val.toUInt64()
-      maxIndex = index
-    }
-    return CGFloat(total) / CGFloat(UInt64(maxIndex))
-  }
 }

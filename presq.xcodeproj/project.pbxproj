@@ -26,6 +26,8 @@
 		C76753A31F326BF700CB45C6 /* TableDelegateWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753A21F326BF700CB45C6 /* TableDelegateWrapper.swift */; };
 		C768EF9F1F2FBB6C002EE467 /* UInt64Convertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = C768EF9E1F2FBB6C002EE467 /* UInt64Convertible.swift */; };
 		C774329C1F433F9B00326D36 /* ArrayExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C774329B1F433F9B00326D36 /* ArrayExt.swift */; };
+		C774329E1F43407000326D36 /* IntExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C774329D1F43407000326D36 /* IntExt.swift */; };
+		C77432A01F43408F00326D36 /* SequenceExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C774329F1F43408F00326D36 /* SequenceExt.swift */; };
 		C7C8CDBA1F336F950067D447 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C8CDB91F336F950067D447 /* ImageCache.swift */; };
 		C7C8CDBC1F33B6AA0067D447 /* ImageCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C8CDBB1F33B6AA0067D447 /* ImageCacheTests.swift */; };
 /* End PBXBuildFile section */
@@ -67,6 +69,8 @@
 		C76753A21F326BF700CB45C6 /* TableDelegateWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDelegateWrapper.swift; sourceTree = "<group>"; };
 		C768EF9E1F2FBB6C002EE467 /* UInt64Convertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UInt64Convertible.swift; sourceTree = "<group>"; };
 		C774329B1F433F9B00326D36 /* ArrayExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExt.swift; sourceTree = "<group>"; };
+		C774329D1F43407000326D36 /* IntExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntExt.swift; sourceTree = "<group>"; };
+		C774329F1F43408F00326D36 /* SequenceExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceExt.swift; sourceTree = "<group>"; };
 		C7AF090C1F423FE300A9C926 /* presq-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "presq-Bridging-Header.h"; sourceTree = "<group>"; };
 		C7C8CDB91F336F950067D447 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		C7C8CDBB1F33B6AA0067D447 /* ImageCacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheTests.swift; sourceTree = "<group>"; };
@@ -116,13 +120,15 @@
 		C71962B21F2F7D7F000EE238 /* Ext */ = {
 			isa = PBXGroup;
 			children = (
-				C71962B31F2F7DA6000EE238 /* CGSizeExt.swift */,
-				C71962B51F2F7DD7000EE238 /* NSImageExt.swift */,
-				C71962B71F2F7E2E000EE238 /* CGImageExt.swift */,
-				C768EF9E1F2FBB6C002EE467 /* UInt64Convertible.swift */,
-				C76753A21F326BF700CB45C6 /* TableDelegateWrapper.swift */,
-				C7506D931F428AC6006CFB2D /* DataExt.swift */,
 				C774329B1F433F9B00326D36 /* ArrayExt.swift */,
+				C71962B71F2F7E2E000EE238 /* CGImageExt.swift */,
+				C71962B31F2F7DA6000EE238 /* CGSizeExt.swift */,
+				C7506D931F428AC6006CFB2D /* DataExt.swift */,
+				C774329D1F43407000326D36 /* IntExt.swift */,
+				C71962B51F2F7DD7000EE238 /* NSImageExt.swift */,
+				C774329F1F43408F00326D36 /* SequenceExt.swift */,
+				C76753A21F326BF700CB45C6 /* TableDelegateWrapper.swift */,
+				C768EF9E1F2FBB6C002EE467 /* UInt64Convertible.swift */,
 			);
 			name = Ext;
 			sourceTree = "<group>";
@@ -407,11 +413,13 @@
 				C763CEF71F26EC6900517756 /* ViewController.swift in Sources */,
 				C7506D981F429532006CFB2D /* ImageProcessor.swift in Sources */,
 				C774329C1F433F9B00326D36 /* ArrayExt.swift in Sources */,
+				C77432A01F43408F00326D36 /* SequenceExt.swift in Sources */,
 				C768EF9F1F2FBB6C002EE467 /* UInt64Convertible.swift in Sources */,
 				C76753A31F326BF700CB45C6 /* TableDelegateWrapper.swift in Sources */,
 				C71962B81F2F7E2E000EE238 /* CGImageExt.swift in Sources */,
 				C7506D941F428AC6006CFB2D /* DataExt.swift in Sources */,
 				C76753A11F32675F00CB45C6 /* ImageInfo.swift in Sources */,
+				C774329E1F43407000326D36 /* IntExt.swift in Sources */,
 				C7092C851F3FA9A6005FF1E9 /* ImageList.swift in Sources */,
 				C71962B61F2F7DD7000EE238 /* NSImageExt.swift in Sources */,
 				C763CEF51F26EC6900517756 /* AppDelegate.swift in Sources */,
