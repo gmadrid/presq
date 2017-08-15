@@ -47,9 +47,9 @@ class ViewController: NSViewController {
     tableDelegate = TableDelegateWrapper(tableView: tableView)
 
     // Prepare the image crawl on background thread, but it's hot, so defer subs until all set up.
-    let dir = "/Users/gmadrid/Desktop/presq/testimages/clean"
+    //    let dir = "/Users/gmadrid/Desktop/presq/testimages/clean"
     //    let dir = "/Users/gmadrid/Desktop/presq/testimages"
-    // let dir = "/Users/gmadrid/Dropbox/Images/Adult/Images"
+    let dir = "/Users/gmadrid/Dropbox/Images/Adult/Images"
     let imageNames = imageFileSource(from: dir)
       .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
       .publish()
@@ -77,6 +77,13 @@ class ViewController: NSViewController {
         return self?.imageList[rowNum]
       }
 
+    let reload = Observable.combineLatest(currentImageInfoS, imageList.infosModifiedS)
+      .filter { (current, modified) -> Bool in
+        guard let current = current else { return false }
+        return current === modified
+      }
+      .map { _ in return () }
+
     let cgImageS = currentImageInfoS.map { [weak self] imageInfo -> CGImage? in
       guard let this = self,
         let imageInfo = imageInfo,
@@ -90,19 +97,12 @@ class ViewController: NSViewController {
     }
     imageS.bind(to: image1View.rx.image).disposed(by: disposeBag)
 
-    currentImageInfoS
-      .map { hashToImage(hash: $0?.ahash) }
+    Observable.combineLatest(currentImageInfoS, reload)
+      .map { hashToImage(hash: $0.0?.ahash) }
       .bind(to: image2View.rx.image).disposed(by: disposeBag)
 
-    currentImageInfoS
-      .map { hashToImage(hash: $0?.dhash) }
+    Observable.combineLatest(currentImageInfoS, reload)
+      .map { hashToImage(hash: $0.0?.dhash) }
       .bind(to: image3View.rx.image).disposed(by: disposeBag)
-
-    Observable.combineLatest(currentImageInfoS, imageList.infosModifiedS)
-      .filter { (current, modified) -> Bool in
-        guard let current = current else { return false }
-        return current === modified
-      }
-      .subscribe(onNext: { print($0) }).disposed(by: disposeBag)
   }
 }
