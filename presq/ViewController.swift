@@ -38,9 +38,9 @@ class ViewController: NSViewController {
     tableDelegate = TableDelegateWrapper(tableView: tableView)
 
     // Prepare the image crawl on background thread, but it's hot, so defer subs until all set up.
-    // let dir = "/Users/gmadrid/Desktop/presq/testimages/clean"
+    let dir = "/Users/gmadrid/Desktop/presq/testimages/clean"
     //    let dir = "/Users/gmadrid/Desktop/presq/testimages"
-    let dir = "/Users/gmadrid/Dropbox/Images/Adult/Images"
+    // let dir = "/Users/gmadrid/Dropbox/Images/Adult/Images"
     let imageNames = imageFileSource(from: dir)
       .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
       .publish()
@@ -55,6 +55,7 @@ class ViewController: NSViewController {
     imageList.infosCreatedS
       .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
       .subscribe(onNext: { [weak self] imageInfo in
+        print("THREAD: \(Thread.current)")
         guard let this = self,
           let cgImage = try? this.imageCache.find(key: imageInfo.url) else { return }
         engine.doit(imageInfo: imageInfo, cgImage: cgImage)
