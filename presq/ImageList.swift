@@ -79,6 +79,8 @@ class ImageList {
     guard let mutable = imageInfo as? MutableImageInfo else {
       throw Error.genericError
     }
-    mutable.mutate(mutation: mutation)
+    DispatchQueue.main.async {
+      mutable.mutate(mutation: mutation)
+    }
   }
 }
