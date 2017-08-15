@@ -6,76 +6,62 @@ protocol ImageProcessor {
   func mutate() -> ImageInfoMutation?
 }
 
-class Sha256Processor: ImageProcessor {
-  let url: URL
-  var hash: [UInt8]?
+typealias ImageProcessFunc = (_ cache: ImageCache<URL, CGImage>, _ imageInfo: ImageInfo)
+  throws -> ImageInfoMutation?
 
-  required init(url: URL) { self.url = url }
-
-  func process(cgImage: CGImage) {
-    guard let cfData = cgImage.dataProvider?.data else { return }
-
+func processSha(cache: ImageCache<URL, CGImage>, imageInfo: ImageInfo) throws -> ImageInfoMutation? {
+  do {
+    let cgImage = try cache.find(key: imageInfo.url)
+    guard let cfData = cgImage.dataProvider?.data else { return nil }
     let data = cfData as NSData as Data
-    hash = data.sha224()
-  }
-
-  func mutate() -> ImageInfoMutation? {
-    guard let hash = hash else { return nil }
-    return .hash(hash)
+    return .hash(data.sha224())
+  } catch {
+    return nil
   }
 }
 
-class AhashProcessor: ImageProcessor {
-  let url: URL
-  var ahash: UInt64?
-
-  required init(url: URL) { self.url = url }
-
-  func process(cgImage: CGImage) {
-    ahash = try? cgImage.ahash()
-  }
-
-  func mutate() -> ImageInfoMutation? {
-    guard let ahash = ahash else { return nil }
+func processAhash(cache: ImageCache<URL, CGImage>, imageInfo: ImageInfo) throws -> ImageInfoMutation? {
+  do {
+    let cgImage = try cache.find(key: imageInfo.url)
+    let ahash = try cgImage.ahash()
     return .ahash(ahash)
+  } catch {
+    return nil
   }
 }
 
-class DhashProcessor: ImageProcessor {
-  let url: URL
-  var dhash: UInt64?
-
-  required init(url: URL) { self.url = url }
-
-  func process(cgImage: CGImage) {
-    dhash = try? cgImage.dhash()
-  }
-
-  func mutate() -> ImageInfoMutation? {
-    guard let dhash = dhash else { return nil }
+func processDhash(cache: ImageCache<URL, CGImage>, imageInfo: ImageInfo) throws -> ImageInfoMutation? {
+  do {
+    let cgImage = try cache.find(key: imageInfo.url)
+    let dhash = try cgImage.dhash()
     return .dhash(dhash)
+  } catch {
+    return nil
   }
 }
 
 class ImageProcessorEngine {
+  let imageCache: ImageCache<URL, CGImage>
   let imageList: ImageList
 
-  init(imageList: ImageList) {
+  init(imageList: ImageList, imageCache: ImageCache<URL, CGImage>) {
+    self.imageCache = imageCache
     self.imageList = imageList
   }
 
-  var processors: [ImageProcessor.Type] = [
-    Sha256Processor.self,
-    AhashProcessor.self,
-    DhashProcessor.self,
+  var processors: [ImageProcessFunc] = [
+    processSha,
+    processAhash,
+    processDhash
   ]
 
-  func doit(imageInfo: ImageInfo, cgImage: CGImage) {
+  func doit(imageInfo: ImageInfo, cgImage _: CGImage) {
     for p in processors {
-      let pp = p.init(url: imageInfo.url)
-      pp.process(cgImage: cgImage)
-      if let mutation = pp.mutate() {
-        try? imageList.mutate(imageInfo: imageInfo, mutation: mutation)
+      do {
+        guard let mutation = try p(imageCache, imageInfo) else { break }
+        try imageList.mutate(imageInfo: imageInfo, mutation: mutation)
+      } catch {
+        break
       }
     }
   }

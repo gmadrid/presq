@@ -7,6 +7,14 @@ enum Error: Swift.Error {
   case genericError
 }
 
+private func hashToImage(hash: UInt64?) -> NSImage? {
+  guard let hash = hash,
+    let blocks = try? imageForBitmap(bitmap: hash, width: 8, height: 8, scale: 40) else {
+    return nil
+  }
+  return NSImage(cgImage: blocks)
+}
+
 class ViewController: NSViewController {
   private let disposeBag = DisposeBag()
 
@@ -51,7 +59,7 @@ class ViewController: NSViewController {
     tableView.dataSource = imageList.dataSource
     imageList.reloadable = tableView
 
-    let engine = ImageProcessorEngine(imageList: imageList)
+    let engine = ImageProcessorEngine(imageList: imageList, imageCache: imageCache)
 
     imageList.infosCreatedS
       .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -82,33 +90,12 @@ class ViewController: NSViewController {
     }
     imageS.bind(to: image1View.rx.image).disposed(by: disposeBag)
 
-    let bwImageS = cgImageS.map { cgImage -> CGImage? in
-      guard let cgImage = cgImage else { return nil }
-      return try? cgImage.toGray()
-    }
-    let smallImageS = bwImageS.map { cgImage -> CGImage? in
-      guard let cgImage = cgImage else { return nil }
-      return try? cgImage.scale(to: CGSize(width: 8, height: 8))
-    }
-
-    smallImageS
-      .map { cgImage -> NSImage? in
-        guard let cgImage = cgImage,
-          let ahash = try? cgImage.ahash(),
-          let blocks = try? imageForBitmap(bitmap: ahash, width: 8, height: 8, scale: 40)
-        else { return nil }
-        return NSImage(cgImage: blocks)
-      }
+    currentImageInfoS
+      .map { hashToImage(hash: $0?.ahash) }
       .bind(to: image2View.rx.image).disposed(by: disposeBag)
 
-    smallImageS
-      .map { cgImage -> NSImage? in
-        guard let cgImage = cgImage,
-          let dhash = try? cgImage.dhash(),
-          let blocks = try? imageForBitmap(bitmap: dhash, width: 8, height: 8, scale: 40)
-        else { return nil }
-        return NSImage(cgImage: blocks)
-      }
+    currentImageInfoS
+      .map { hashToImage(hash: $0?.dhash) }
       .bind(to: image3View.rx.image).disposed(by: disposeBag)
   }
 }
