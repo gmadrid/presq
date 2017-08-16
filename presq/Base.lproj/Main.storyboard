@@ -684,21 +684,21 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="presq" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="786" height="948"/>
+                        <rect key="frame" x="0.0" y="0.0" width="786" height="958"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <splitView dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c35-9V-AR9">
-                                <rect key="frame" x="0.0" y="0.0" width="786" height="948"/>
+                                <rect key="frame" x="0.0" y="0.0" width="786" height="958"/>
                                 <subviews>
                                     <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="a6u-bR-ets">
-                                        <rect key="frame" x="0.0" y="0.0" width="188" height="948"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="188" height="958"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <clipView key="contentView" id="VP6-0B-F0m">
-                                            <rect key="frame" x="1" y="0.0" width="186" height="947"/>
+                                            <rect key="frame" x="1" y="0.0" width="186" height="957"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" headerView="sNC-ng-hcd" id="2kG-em-k9F">
-                                                    <rect key="frame" x="0.0" y="0.0" width="241" height="924"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="241" height="934"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -722,7 +722,7 @@
                                             </subviews>
                                         </clipView>
                                         <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="SEH-Ns-J6O">
-                                            <rect key="frame" x="1" y="931" width="186" height="16"/>
+                                            <rect key="frame" x="1" y="941" width="186" height="16"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="aEW-ph-bMK">
@@ -735,25 +735,25 @@
                                         </tableHeaderView>
                                     </scrollView>
                                     <customView id="Z5E-Ap-Ad2">
-                                        <rect key="frame" x="198" y="0.0" width="588" height="948"/>
+                                        <rect key="frame" x="198" y="0.0" width="588" height="958"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
-                                            <stackView distribution="fillEqually" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HgB-MO-g7r" userLabel="VertStackImages">
-                                                <rect key="frame" x="0.0" y="0.0" width="774" height="948"/>
+                                            <stackView distribution="fillEqually" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HgB-MO-g7r" userLabel="VertStackImages">
+                                                <rect key="frame" x="0.0" y="0.0" width="588" height="958"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lR9-3o-m51">
-                                                        <rect key="frame" x="-3" y="471" width="780" height="480"/>
+                                                        <rect key="frame" x="-3" y="479" width="594" height="482"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="MIb-XO-OBN"/>
                                                     </imageView>
                                                     <stackView distribution="fillEqually" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ukD-hG-ZHf" userLabel="HorizStackImages">
-                                                        <rect key="frame" x="0.0" y="0.0" width="774" height="474"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="588" height="477"/>
                                                         <subviews>
                                                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rCd-GO-6Z3">
-                                                                <rect key="frame" x="-3" y="-3" width="184" height="480"/>
+                                                                <rect key="frame" x="-3" y="0.0" width="296" height="480"/>
                                                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="F6Z-qf-0mf"/>
                                                             </imageView>
                                                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="U1K-32-od2">
-                                                                <rect key="frame" x="183" y="-3" width="594" height="480"/>
+                                                                <rect key="frame" x="295" y="0.0" width="296" height="480"/>
                                                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="nVA-5z-R3G"/>
                                                             </imageView>
                                                         </subviews>
