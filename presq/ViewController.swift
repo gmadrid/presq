@@ -49,7 +49,8 @@ class ViewController: NSViewController {
     // Prepare the image crawl on background thread, but it's hot, so defer subs until all set up.
     //    let dir = "/Users/gmadrid/Desktop/presq/testimages/clean"
     //    let dir = "/Users/gmadrid/Desktop/presq/testimages"
-    let dir = "/Users/gmadrid/Dropbox/Images/Adult/Images"
+    //    let dir = "/Users/gmadrid/Dropbox/Images/Adult/Images"
+    let dir = "/Users/gmadrid/Dropbox/Images/Personal/Images"
     let imageNames = imageFileSource(from: dir)
       .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
       .publish()

@@ -11,6 +11,7 @@
 		C16D9BA751CABF6492B716E5 /* Pods_presqTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD0C5241FEF94E3B953674B5 /* Pods_presqTests.framework */; };
 		C7092C831F3FA2FF005FF1E9 /* NOTES in Resources */ = {isa = PBXBuildFile; fileRef = C7092C821F3FA2FF005FF1E9 /* NOTES */; };
 		C7092C851F3FA9A6005FF1E9 /* ImageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7092C841F3FA9A6005FF1E9 /* ImageList.swift */; };
+		C710ABEA1F4491E10062261F /* NSTableViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C710ABE91F4491E10062261F /* NSTableViewExt.swift */; };
 		C71962B41F2F7DA6000EE238 /* CGSizeExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71962B31F2F7DA6000EE238 /* CGSizeExt.swift */; };
 		C71962B61F2F7DD7000EE238 /* NSImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71962B51F2F7DD7000EE238 /* NSImageExt.swift */; };
 		C71962B81F2F7E2E000EE238 /* CGImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71962B71F2F7E2E000EE238 /* CGImageExt.swift */; };
@@ -50,6 +51,7 @@
 		B93559089B1B7883759371C0 /* Pods-presqTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-presqTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-presqTests/Pods-presqTests.release.xcconfig"; sourceTree = "<group>"; };
 		C7092C821F3FA2FF005FF1E9 /* NOTES */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NOTES; sourceTree = "<group>"; };
 		C7092C841F3FA9A6005FF1E9 /* ImageList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageList.swift; sourceTree = "<group>"; };
+		C710ABE91F4491E10062261F /* NSTableViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSTableViewExt.swift; sourceTree = "<group>"; };
 		C71962B31F2F7DA6000EE238 /* CGSizeExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGSizeExt.swift; sourceTree = "<group>"; };
 		C71962B51F2F7DD7000EE238 /* NSImageExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSImageExt.swift; sourceTree = "<group>"; };
 		C71962B71F2F7E2E000EE238 /* CGImageExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGImageExt.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				C7506D931F428AC6006CFB2D /* DataExt.swift */,
 				C774329D1F43407000326D36 /* IntExt.swift */,
 				C71962B51F2F7DD7000EE238 /* NSImageExt.swift */,
+				C710ABE91F4491E10062261F /* NSTableViewExt.swift */,
 				C774329F1F43408F00326D36 /* SequenceExt.swift */,
 				C76753A21F326BF700CB45C6 /* TableDelegateWrapper.swift */,
 				C768EF9E1F2FBB6C002EE467 /* UInt64Convertible.swift */,
@@ -408,6 +411,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C71962B41F2F7DA6000EE238 /* CGSizeExt.swift in Sources */,
+				C710ABEA1F4491E10062261F /* NSTableViewExt.swift in Sources */,
 				C7C8CDBA1F336F950067D447 /* ImageCache.swift in Sources */,
 				C763CF121F26EC9900517756 /* Crawl.swift in Sources */,
 				C763CEF71F26EC6900517756 /* ViewController.swift in Sources */,

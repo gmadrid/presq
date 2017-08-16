@@ -1,4 +1,3 @@
-import Cocoa
 import RxSwift
 
 // We don't want a Cocoa dependency, but the easiest way to do this is just
@@ -7,8 +6,6 @@ import RxSwift
 protocol Reloadable: class {
   func reloadData()
 }
-
-extension NSTableView: Reloadable {}
 
 // This little class is just here so that I can provide an NSTableViewDataSource without
 // making the ImageList into an NSObject.
